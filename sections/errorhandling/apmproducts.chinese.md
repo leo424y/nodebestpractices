@@ -1,27 +1,27 @@
-# 使用 APM 产品发现错误和宕机时间
+# 使用 APM 產品發現錯誤和宕機時間
 
 
-### 一段解释
+### 一段解釋
 
-异常 != 错误。传统的错误处理假定存在异常，但应用程序错误可能以代码路径慢，API停机，缺少计算资源等形式出现。因为APM产品允许使用最小的设置来先前一步地检测各种各样 "深埋" 的问题，这是运用它们方便的地方。APM产品的常见功能包括: 当HTTP API返回错误时报警, 在API响应时间低于某个阈值时能被检测, 觉察到‘code smells’，监视服务器资源，包含IT度量的操作型智能仪表板以及其他许多有用的功能。大多数供应商提供免费方案。
+異常 != 錯誤。傳統的錯誤處理假定存在異常，但應用程式錯誤可能以程式碼路徑慢，API停機，缺少計算資源等形式出現。因為APM產品允許使用最小的設定來先前一步地檢測各種各樣 "深埋" 的問題，這是運用它們方便的地方。APM產品的常見功能包括: 當HTTP API返回錯誤時報警, 在API響應時間低於某個閾值時能被檢測, 覺察到‘code smells’，監視伺服器資源，包含IT度量的操作型智慧儀錶板以及其他許多有用的功能。大多數供應商提供免費方案。
 
-### 关于 APM 的维基百科
+### 關於 APM 的維基百科
 
-在信息技术和系统管理领域, 应用程序性能管理(APM)是对软件应用程序的性能和可用性的监视和管理。APM努力检测和诊断复杂的应用程序性能问题, 以维护预期的服务级别。APM是"将IT度量标准转换为业务含义"
+在資訊科技和系統管理領域, 應用程式效能管理(APM)是對軟體應用程式的效能和可用性的監視和管理。APM努力檢測和診斷複雜的應用程式效能問題, 以維護預期的服務級別。APM是"將IT度量標準轉換為業務含義"
 
-### 了解 APM 市场
+### 瞭解 APM 市場
 
-APM 产品由3个主要部分构成:
+APM 產品由3個主要部分構成:
 
-1. 网站或API监控 – 通过HTTP请求不断监视正常运行时间和性能的外部服务。可以在几分钟内安装。以下是少数选定的竞争者: [Pingdom](https://www.pingdom.com/), [Uptime Robot](https://uptimerobot.com/), 和[New Relic](https://newrelic.com/application-monitoring)；
+1. 網站或API監控 – 通過HTTP請求不斷監視正常執行時間和效能的外部服務。可以在幾分鐘內安裝。以下是少數選定的競爭者: [Pingdom](https://www.pingdom.com/), [Uptime Robot](https://uptimerobot.com/), 和[New Relic](https://newrelic.com/application-monitoring)；
 
-2. 代码检测 – 这类产品需要在应用程序中嵌入代理, 以实现如检测运行缓慢的代码、异常统计、性能监视等功能。以下是少数选定的竞争者: New Relic, App Dynamics；
+2. 程式碼檢測 – 這類產品需要在應用程式中嵌入代理, 以實現如檢測執行緩慢的程式碼、異常統計、效能監視等功能。以下是少數選定的競爭者: New Relic, App Dynamics；
 
-3. 操作型智能仪表板 – 这些产品系列侧重于为ops团队提供度量和管理内容, 帮助他们轻松地保持应用程序性能维持在最佳状态。这通常涉及聚合多个信息源 (应用程序日志、DB日志、服务器日志等) 和前期仪表板设计工作。以下是少数选定的竞争者: [Datadog](https://www.datadoghq.com/), [Splunk](https://www.splunk.com/), [Zabbix](https://www.zabbix.com/)；
+3. 操作型智慧儀錶板 – 這些產品系列側重於為ops團隊提供度量和管理內容, 幫助他們輕鬆地保持應用程式效能維持在最佳狀態。這通常涉及聚合多個資訊源 (應用程式日誌、DB日誌、伺服器日誌等) 和前期儀錶板設計工作。以下是少數選定的競爭者: [Datadog](https://www.datadoghq.com/), [Splunk](https://www.splunk.com/), [Zabbix](https://www.zabbix.com/)；
 
 
- ### 示例: UpTimeRobot.Com – 网站监控仪表板
+ ### 示例: UpTimeRobot.Com – 網站監控儀錶板
 ![alt text](../../assets/images/uptimerobot.jpg "Website monitoring dashboard")
 
- ### 示例: AppDynamics.Com – 与代码检测结合的端到端监视
+ ### 示例: AppDynamics.Com – 與程式碼檢測結合的端到端監視
 ![alt text](../../assets/images/app-dynamics-dashboard.png "end to end monitoring combined with code instrumentation")

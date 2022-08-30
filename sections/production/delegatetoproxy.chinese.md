@@ -1,19 +1,19 @@
-# 委托任何可能的 (例如静态内容，gzip) 到反向代理
+# 委託任何可能的 (例如靜態內容，gzip) 到反向代理
 
 <br/><br/>
 
 
-### 一段解释
+### 一段解釋
 
-过度使用Express，及其丰富的中间件去提供网络相关的任务，如服务静态文件，gzip 编码，throttling requests，SSL termination等，是非常诱人的。由于Node.js的单线程模型，这将使CPU长时间处于忙碌状态 (请记住，node的执行模型针对短任务或异步IO相关任务进行了优化)，因此这是一个性能消耗。一个更好的方法是使用专注于处理网络任务的工具 – 最流行的是nginx和HAproxy，它们也被最大的云供应商使用，以减轻在Node.js进程上所面临的负载问题。
+過度使用Express，及其豐富的中介軟體去提供網路相關的任務，如服務靜態檔案，gzip 編碼，throttling requests，SSL termination等，是非常誘人的。由於Node.js的單執行緒模型，這將使CPU長時間處於忙碌狀態 (請記住，node的執行模型針對短任務或非同步IO相關任務進行了優化)，因此這是一個效能消耗。一個更好的方法是使用專注於處理網路任務的工具 – 最流行的是nginx和HAproxy，它們也被最大的雲供應商使用，以減輕在Node.js程序上所面臨的負載問題。
 
 <br/><br/>
 
 
-### 代码示例 – 使用 nginx 压缩服务器响应
+### 程式碼示例 – 使用 nginx 壓縮伺服器響應
 
 ```
-# 配置 gzip 压缩
+# 配置 gzip 壓縮
 gzip on;
 gzip_comp_level 6;
 gzip_vary on;
@@ -25,7 +25,7 @@ upstream myApplication {
     keepalive 64;
 }
 
-#定义 web server
+#定義 web server
 server {
     # configure server with ssl and error pages
     listen 80;
@@ -43,12 +43,12 @@ server {
 
 <br/><br/>
 
-### 其他博客作者说什么
+### 其他部落格作者說什麼
 
-* 摘自博客 [Mubaloo](http://mubaloo.com/best-practices-deploying-node-js-applications):
-> …很容易落入这个陷阱 – 你看到一个包比如Express，并认为 "真棒!让我们开始吧" – 你编写了代码，你实现了一个应用程序，做你想要的。这很好，老实说，你已经完成了大部分的事情。但是，如果您将应用程序上传到服务器并让它侦听 HTTP 端口，您将搞砸这个应用，因为您忘记了一个非常关键的事情: node不是 web 服务器。**一旦任何流量开始访问你的应用程序， 你会发现事情开始出错:  连接被丢弃，资源停止服务，或在最坏的情况下，你的服务器崩溃。你正在做的是试图让node处理所有复杂的事情，而这些事情让一个已验证过了的 web 服务器来处理，再好也不会过。为什么要重新造轮子？It**
-> **这只是为了一个请求，为了一个图像，并铭记在脑海中，您的应用程序可以用于重要的东西，如读取数据库或处理复杂的逻辑; 为了方便起见，你为什么要削弱你的应用？**
+* 摘自部落格 [Mubaloo](http://mubaloo.com/best-practices-deploying-node-js-applications):
+> …很容易落入這個陷阱 – 你看到一個包比如Express，並認為 "真棒!讓我們開始吧" – 你編寫了程式碼，你實現了一個應用程式，做你想要的。這很好，老實說，你已經完成了大部分的事情。但是，如果您將應用程式上傳到伺服器並讓它偵聽 HTTP 埠，您將搞砸這個應用，因為您忘記了一個非常關鍵的事情: node不是 web 伺服器。**一旦任何流量開始訪問你的應用程式， 你會發現事情開始出錯:  連線被丟棄，資源停止服務，或在最壞的情況下，你的伺服器崩潰。你正在做的是試圖讓node處理所有複雜的事情，而這些事情讓一個已驗證過了的 web 伺服器來處理，再好也不會過。為什麼要重新造輪子？It**
+> **這只是為了一個請求，為了一個影象，並銘記在腦海中，您的應用程式可以用於重要的東西，如讀取資料庫或處理複雜的邏輯; 為了方便起見，你為什麼要削弱你的應用？**
 
 
-* 摘自博客 [Argteam](http://blog.argteam.com/coding/hardening-node-js-for-production-part-2-using-nginx-to-avoid-node-js-load):
-> 虽然 express.js 通过一些connect中间件处理静态文件，但你不应该使用它。**Nginx 可以更好地处理静态文件，并可以防止请求动态内容堵塞我们的node进程**…
+* 摘自部落格 [Argteam](http://blog.argteam.com/coding/hardening-node-js-for-production-part-2-using-nginx-to-avoid-node-js-load):
+> 雖然 express.js 通過一些connect中介軟體處理靜態檔案，但你不應該使用它。**Nginx 可以更好地處理靜態檔案，並可以防止請求動態內容堵塞我們的node程序**…

@@ -1,9 +1,9 @@
-# 对于异步的错误处理，请使用 Async-Await 或者 promises
+# 對於非同步的錯誤處理，請使用 Async-Await 或者 promises
 
-### 一段解释
-由于大多数的程序员不熟悉回调，不能很好的掌控回调函数，导致被迫到处检测错误，处理让人不快的代码嵌套和难以理解的代码流程。Promise 的库，比如 BlueBird，async，和 Q 封装了一些代码，使用者可以使用 RETURN 和 THROW 的方式来控制程序的流程。具体来说，就是它们支持最受欢迎的 try-catch 错误处理风格，这使得主流程代码从在每一个方法中处理错误的方式中解放出来。
+### 一段解釋
+由於大多數的程式設計師不熟悉回撥，不能很好的掌控回撥函數，導致被迫到處檢測錯誤，處理讓人不快的程式碼巢狀和難以理解的程式碼流程。Promise 的庫，比如 BlueBird，async，和 Q 封裝了一些程式碼，使用者可以使用 RETURN 和 THROW 的方式來控制程式的流程。具體來說，就是它們支援最受歡迎的 try-catch 錯誤處理風格，這使得主流程程式碼從在每一個方法中處理錯誤的方式中解放出來。
 
-### 代码示例 – 使用 promises 捕获错误
+### 程式碼示例 – 使用 promises 捕獲錯誤
 
 ```javascript
 doWork()
@@ -16,7 +16,7 @@ doWork()
   .then(verify);
 ```
 
-### 代码示例 - 使用 async/await 捕获错误
+### 程式碼示例 - 使用 async/await 捕獲錯誤
 
 ```javascript
 async function executeAsyncTask() {
@@ -33,7 +33,7 @@ async function executeAsyncTask() {
 }
 ```
 
-### 代码示例 反模式 – 回调方式的错误处理
+### 程式碼示例 反模式 – 回撥方式的錯誤處理
 
 <details>
 <summary><strong>Javascript</strong></summary>
@@ -41,14 +41,14 @@ async function executeAsyncTask() {
 ```javascript
 getData(someParameter, function(err, result){
     if(err != null)
-      //做一些事情类似于调用给定的回调函数并传递错误
+      //做一些事情類似於呼叫給定的回撥函數並傳遞錯誤
       getMoreData(a, function(err, result){
         if(err != null)
-          //做一些事情类似于调用给定的回调函数并传递错误
+          //做一些事情類似於呼叫給定的回撥函數並傳遞錯誤
           getMoreData(b, function(c){
             getMoreData(d, function(e){
               if(err != null)
-                //你有什么想法? 
+                //你有什麼想法? 
     });
 });
 ```
@@ -61,14 +61,14 @@ getData(someParameter, function(err, result){
 ```typescript
 getData(someParameter, function (err: Error | null, resultA: ResultA) {
   if (err !== null) {
-    //做一些事情类似于调用给定的回调函数并传递错误
+    //做一些事情類似於呼叫給定的回撥函數並傳遞錯誤
     getMoreData(resultA, function (err: Error | null, resultB: ResultB) {
       if (err !== null) {
-        //做一些事情类似于调用给定的回调函数并传递错误
+        //做一些事情類似於呼叫給定的回撥函數並傳遞錯誤
         getMoreData(resultB, function (resultC: ResultC) {
           getMoreData(resultC, function (err: Error | null, d: ResultD) {
             if (err !== null) {
-              // 你有什么想法？
+              // 你有什麼想法？
             }
           });
         });
@@ -80,26 +80,26 @@ getData(someParameter, function (err: Error | null, resultA: ResultA) {
 
 </details>
 
-### 博客引用: "我们使用 promise 有一个问题"
+### 部落格引用: "我們使用 promise 有一個問題"
 
-摘自博客 pouchdb.com
+摘自部落格 pouchdb.com
 
-> ……实际上, 回调会做一些更险恶的事情: 他们剥夺了我们的 stack, 这是我们通常在编程语言中想当然的事情。编写没有堆栈的代码很像驾驶一辆没有刹车踏板的汽车: 你没有意识到你有多么需要它, 直到你伸手去找它, 而它不在那里。promise 的全部目的是让我们回到我们在异步时丢失的语言基础: return，throw 和 stack。但你必须知道如何正确使用 promise, 以便利用他们。
+> ……實際上, 回撥會做一些更險惡的事情: 他們剝奪了我們的 stack, 這是我們通常在程式語言中想當然的事情。編寫沒有堆棧的程式碼很像駕駛一輛沒有剎車踏板的汽車: 你沒有意識到你有多麼需要它, 直到你伸手去找它, 而它不在那裡。promise 的全部目的是讓我們回到我們在非同步時丟失的語言基礎: return，throw 和 stack。但你必須知道如何正確使用 promise, 以便利用他們。
 
-### 博客引用: "promise 方法更加紧凑"
+### 部落格引用: "promise 方法更加緊湊"
 
-摘自博客 gosquared.com
+摘自部落格 gosquared.com
 
-> ………promise 的方法更紧凑, 更清晰, 写起来更快速。如果在任何 ops 中发生错误或异常,则由单个.catch()处理程序处理。有这个单一的地方来处理所有的错误意味着你不需要为每个阶段的工作写错误检查。
+> ………promise 的方法更緊湊, 更清晰, 寫起來更快速。如果在任何 ops 中發生錯誤或異常,則由單個.catch()處理程式處理。有這個單一的地方來處理所有的錯誤意味著你不需要為每個階段的工作寫錯誤檢查。
 
-### 博客引用: "原生 ES6 支持 promise，可以和 generator 一起使用"
+### 部落格引用: "原生 ES6 支援 promise，可以和 generator 一起使用"
 
-摘自博客 StrongLoop
+摘自部落格 StrongLoop
 
-> ….回调有一个糟糕的错误处理的报道。promise 更好。将 express 内置的错误处理与 promise 结合起来, 大大降低了 uncaught exception 的几率。原生 ES6 支持 promise, 通过编译器 babel，它可以与 generator，ES7 提议的技术(比如 async/await)一起使用。
+> ….回撥有一個糟糕的錯誤處理的報道。promise 更好。將 express 內建的錯誤處理與 promise 結合起來, 大大降低了 uncaught exception 的機率。原生 ES6 支援 promise, 通過編譯器 babel，它可以與 generator，ES7 提議的技術(比如 async/await)一起使用。
 
-### 博客引用: "所有那些您所习惯的常规的流量控制结构, 完全被打破"
+### 部落格引用: "所有那些您所習慣的常規的流量控制結構, 完全被打破"
 
-摘自博客 Benno’s
+摘自部落格 Benno’s
 
-> ……关于基于异步、回调编程的最好的事情之一是, 基本上所有那些您习惯的常规流量控制结构, 完全被打破。然而, 我发现最易打破的是处理异常。Javascript 提供了一个相当熟悉的 try...catch 结构来处理异常。异常的问题是, 它们提供了在一个调用堆栈上 short-cutting 错误的很好的方法, 但最终由于不同堆栈上发生的错误导致完全无用…
+> ……關於基於非同步、回撥程式設計的最好的事情之一是, 基本上所有那些您習慣的常規流量控制結構, 完全被打破。然而, 我發現最易打破的是處理異常。Javascript 提供了一個相當熟悉的 try...catch 結構來處理異常。異常的問題是, 它們提供了在一個呼叫堆棧上 short-cutting 錯誤的很好的方法, 但最終由於不同堆棧上發生的錯誤導致完全無用…

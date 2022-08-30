@@ -1,20 +1,20 @@
 # 使用 Node.js 的 LTS 版本
 
-### 一段解释
+### 一段解釋
 
-确保您在正式环境中使用的是LTS（长期支持）版本的Node.js来获取关键错误的修复、安全更新和性能改进. 
+確保您在正式環境中使用的是LTS（長期支援）版本的Node.js來獲取關鍵錯誤的修復、安全更新和效能改進. 
 
-LTS版本的Node.js至少支持18个月，并由偶数版本号（例如 4、6、8）表示。它们最适合生产环境，因为LTS的发行线专注于稳定性和安全性，而“Current”版本发布寿命较短，代码更新更加频繁。LTS版本的更改仅限于稳定性错误修复、安全更新、合理的npm更新、文档更新和某些可以证明不会破坏现有应用程序的性能改进。
+LTS版本的Node.js至少支援18個月，並由偶數版本號（例如 4、6、8）表示。它們最適合生產環境，因為LTS的發行線專注於穩定性和安全性，而“Current”版本釋出壽命較短，程式碼更新更加頻繁。LTS版本的更改僅限於穩定性錯誤修復、安全更新、合理的npm更新、文件更新和某些可以證明不會破壞現有應用程式的效能改進。
 
 <br/><br/>
 
-### 继续读下去
+### 繼續讀下去
 
-🔗 [ Node.js版本定义 ](https://nodejs.org/en/about/releases/)
+🔗 [ Node.js版本定義 ](https://nodejs.org/en/about/releases/)
 
-🔗 [ Node.js发布时间表 ](https://github.com/nodejs/Release)
+🔗 [ Node.js釋出時間表 ](https://github.com/nodejs/Release)
 
-🔗 [必要步骤：Long Term Support for Node.js by Rod Vagg（Node.js的长期支持by Rod Vagg）](https://medium.com/@nodesource/essential-steps-long-term-support-for-node-js-8ecf7514dbd)
-> ...每个增量发布计划将由错误修复、安全修复和其他小但重要的更改的可用性来驱动。重点将放在稳定性上，但稳定性还包括最大程度地减少已知错误的数量，和持续关注重大的安全问题。
+🔗 [必要步驟：Long Term Support for Node.js by Rod Vagg（Node.js的長期支援by Rod Vagg）](https://medium.com/@nodesource/essential-steps-long-term-support-for-node-js-8ecf7514dbd)
+> ...每個增量釋出計劃將由錯誤修復、安全修復和其他小但重要的更改的可用性來驅動。重點將放在穩定性上，但穩定性還包括最大程度地減少已知錯誤的數量，和持續關注重大的安全問題。
 
 <br/><br/>

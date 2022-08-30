@@ -1,23 +1,23 @@
-#  仅使用内建的错误对象
+#  僅使用內建的錯誤物件
 
 
-### 一段解释
+### 一段解釋
 
-JS天生的宽容性及其多变的代码流选项（例如 EventEmitter, Callbacks, Promises等等）使得开发者有太多引发错误的方式 – 有些人使用字符串，有些人使用自定义的类型。使用Node.js的内置错误对象有助于在你的代码和第三方库之间保持一致性，它还保留了重要信息，比如StackTrace。当引发异常时，给异常附加上下文属性（如错误名称和相关的HTTP错误代码）通常是一个好的习惯。要实现这种一致性和实践，请考虑使用附加属性扩展错误对象，见下面的代码示例。
+JS天生的寬容性及其多變的程式碼流選項（例如 EventEmitter, Callbacks, Promises等等）使得開發者有太多引發錯誤的方式 – 有些人使用字元串，有些人使用自定義的類型。使用Node.js的內建錯誤物件有助於在你的程式碼和第三方庫之間保持一致性，它還保留了重要資訊，比如StackTrace。當引發異常時，給異常附加上下文屬性（如錯誤名稱和相關的HTTP錯誤程式碼）通常是一個好的習慣。要實現這種一致性和實踐，請考慮使用附加屬性擴充套件錯誤物件，見下面的程式碼示例。
 
 
-### 代码示例 – 正确做法
+### 程式碼示例 – 正確做法
 
 ```javascript
-//从典型函数抛出错误, 无论是同步还是异步
+//從典型函數拋出錯誤, 無論是同步還是非同步
 if(!productToAdd)
     throw new Error("How can I add new product when no value provided?");
 
-//从EventEmitter抛出错误
+//從EventEmitter拋出錯誤
 const myEmitter = new MyEmitter();
 myEmitter.emit('error', new Error('whoops!'));
 
-//从promise抛出错误
+//從promise拋出錯誤
  return new promise(function (resolve, reject) {
     Return DAL.getProduct(productToAdd.id).then((existingProduct) => {
         if(existingProduct != null)
@@ -25,56 +25,56 @@ myEmitter.emit('error', new Error('whoops!'));
 
 ```
 
-### 代码示例 – 反例
+### 程式碼示例 – 反例
 
 ```javascript
-//抛出字符串错误缺少任何stack trace信息和其他重要属性
+//拋出字元串錯誤缺少任何stack trace資訊和其他重要屬性
 if(!productToAdd)
     throw ("How can I add new product when no value provided?");
 
 ```
 
-### 代码示例 – 更好做法
+### 程式碼示例 – 更好做法
 
 ```javascript
-//从node错误派生的集中错误对象
+//從node錯誤派生的集中錯誤物件
 function appError(name, httpCode, description, isOperational) {
     Error.call(this);
     Error.captureStackTrace(this);
     this.name = name;
-    //...在这赋值其它属性
+    //...在這賦值其它屬性
 };
 
 appError.prototype = Object.create(Error.prototype);
-appError.prototype.constructor = appError;
+appError.prototype.function Object() { [native code] } = appError;
 
 module.exports.appError = appError;
 
-//客户端抛出一个错误
+//客戶端拋出一個錯誤
 if(user == null)
   throw new appError(commonErrors.resourceNotFound, commonHTTPErrors.notFound, "further explanation", true)
 ```
 
-### 博客引用：“I don’t see the value in having lots of different types”
+### 部落格引用：“I don’t see the value in having lots of different types”
 
-摘自博客Ben Nadel, 对于关键字“Node.JS错误对象”，排名第五
+摘自部落格Ben Nadel, 對於關鍵字“Node.JS錯誤物件”，排名第五
 
-> … 就我个人而言，我没看到弄很多不同类型的错误对象的价值 – JavaScript作为一种语言，似乎不适合基于构造函数的错误捕获。因此，区分对象属性似乎比区分构造函数类型容易得多…
+> … 就我個人而言，我沒看到弄很多不同類型的錯誤物件的價值 – JavaScript作為一種語言，似乎不適合基於建構函式的錯誤捕獲。因此，區分物件屬性似乎比區分建構函式類型容易得多…
 
-### 博客引用: "字符串不是错误"
+### 部落格引用: "字元串不是錯誤"
 
-摘自博客 devthought.com, 对于关键字 “Node.JS error object” 排名第6
+摘自部落格 devthought.com, 對於關鍵字 “Node.JS error object” 排名第6
 
-> … 传递字符串而不是错误会导致模块间协作性降低。它打破了和API的约定，可能在执行`instanceof`这样的错误检查，或想了解更多关于错误的信息。正如我们将看到的，错误对象在现代JavaScript引擎中拥有非常有趣的属性，同时保留传递给构造函数的消息…
+> … 傳遞字元串而不是錯誤會導致模組間協作性降低。它打破了和API的約定，可能在執行`instanceof`這樣的錯誤檢查，或想了解更多關於錯誤的資訊。正如我們將看到的，錯誤物件在現代JavaScript引擎中擁有非常有趣的屬性，同時保留傳遞給建構函式的訊息…
 
-### 博客引用: "从Error对象继承不会增加太多的价值"
+### 部落格引用: "從Error物件繼承不會增加太多的價值"
 
-摘自博客 machadogj
+摘自部落格 machadogj
 
-> … 我对Error类的一个问题是不太容易扩展。当然, 您可以继承该类并创建自己的Error类, 如HttpError、DbError等。然而, 这需要时间, 并且不会增加太多的价值, 除非你是在做一些关于类型的事情。有时, 您只想添加一条消息, 并保留内部错误, 有时您可能希望使用参数扩展该错误, 等等…
+> … 我對Error類的一個問題是不太容易擴充套件。當然, 您可以繼承該類並建立自己的Error類, 如HttpError、DbError等。然而, 這需要時間, 並且不會增加太多的價值, 除非你是在做一些關於類型的事情。有時, 您只想新增一條訊息, 並保留內部錯誤, 有時您可能希望使用參數擴充套件該錯誤, 等等…
 
-### 博客引用: "Node.js引发的所有JavaScript和系统错误都继承自Error"
+### 部落格引用: "Node.js引發的所有JavaScript和系統錯誤都繼承自Error"
 
-摘自 Node.JS 官方文档
+摘自 Node.JS 官方文件
 
-> … Node.js引发的所有JavaScript和系统错误继承自，或是JavaScript标准错误类的实例, 这保证至少提供了该类的可用属性。一个通用的JavaScript错误对象, 它不表示错误为什么发生的任何特定环境。错误对象捕获一个"stack trace", 详细说明了错误被实例化时在代码中的点, 并可能提供错误的文本描述。由Node.js生成的所有错误, 包括所有的系统和JavaScript错误, 都将是Error类的实例, 或继承自Error类 …
+> … Node.js引發的所有JavaScript和系統錯誤繼承自，或是JavaScript標準錯誤類的例項, 這保證至少提供了該類的可用屬性。一個通用的JavaScript錯誤物件, 它不表示錯誤為什麼發生的任何特定環境。錯誤物件捕獲一個"stack trace", 詳細說明了錯誤被例項化時在程式碼中的點, 並可能提供錯誤的文字描述。由Node.js生成的所有錯誤, 包括所有的系統和JavaScript錯誤, 都將是Error類的例項, 或繼承自Error類 …

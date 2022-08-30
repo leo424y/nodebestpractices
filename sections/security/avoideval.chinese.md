@@ -1,22 +1,22 @@
-# 避免JS eval语法
+# 避免JS eval語法
 
-### 一段解释
+### 一段解釋
 
-`eval()`，`setTimeout()`和`setInterval()`是全局方法，经常在Node.js中被使用，它接收一个字符串参数，代表一个JavaScript表达式，语句，或者语句序列。使用这些函数的安全问题是, 不受信任的用户输入可能会发现进入代码执行的方式，从而导致危害服务器，因为评估用户代码实质上允许攻击者执行任何他可以的操作。对于这些用户输入可以传递给函数并执行的方法，建议重构代码，而不依赖于它们的使用。
+`eval()`，`setTimeout()`和`setInterval()`是全局方法，經常在Node.js中被使用，它接收一個字元串參數，代表一個JavaScript表示式，語句，或者語句序列。使用這些函數的安全問題是, 不受信任的使用者輸入可能會發現進入程式碼執行的方式，從而導致危害伺服器，因為評估使用者程式碼實質上允許攻擊者執行任何他可以的操作。對於這些使用者輸入可以傳遞給函數並執行的方法，建議重構程式碼，而不依賴於它們的使用。
 
-### 代码示例
+### 程式碼示例
 
 ```javascript
-// 攻击者可能输入的恶意代码示例
+// 攻擊者可能輸入的惡意程式碼示例
 const userInput = "require('child_process').spawn('rm', ['-rf', '/'])";
 
-// 恶意代码被执行
+// 惡意程式碼被執行
 eval(userInput);
 ```
 
-### 其他博客作者的说法
+### 其他部落格作者的說法
 
-摘自[Liran Tal](https://leanpub.com/nodejssecurity)的书籍Essential Node.js Security:
-> 从安全的角度出发，在JavaScript语法中，eval()可能是最让人不悦的函数。
-它将javascript字符串解析为文本，并将其作为javascript代码执行。
-和不受信任的用户输入掺和在一起，可能会发现使用eval()是一个导致灾难的方式，最终服务器遭受破坏。
+摘自[Liran Tal](https://leanpub.com/nodejssecurity)的書籍Essential Node.js Security:
+> 從安全的角度出發，在JavaScript語法中，eval()可能是最讓人不悅的函數。
+它將javascript字元串解析為文字，並將其作為javascript程式碼執行。
+和不受信任的使用者輸入摻和在一起，可能會發現使用eval()是一個導致災難的方式，最終伺服器遭受破壞。

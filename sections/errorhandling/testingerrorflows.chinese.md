@@ -1,13 +1,13 @@
-# 使用您喜欢的测试框架测试错误流
+# 使用您喜歡的測試框架測試錯誤流
 
 
-### 一段解释
+### 一段解釋
 
-测试‘正确’路径并不比测试失败更好。良好的测试代码覆盖率要求测试异常路径。否则，异常确实被处理正确是不可信的。每个单元测试框架，如[Mocha](https://mochajs.org/) & [Chai](http://chaijs.com/)，都支持异常测试（请看下面的代码示例）。如果您觉得测试每个内部函数和异常都很乏味，那么您可以只测试REST API HTTP错误。
+測試‘正確’路徑並不比測試失敗更好。良好的測試程式碼覆蓋率要求測試異常路徑。否則，異常確實被處理正確是不可信的。每個單元測試框架，如[Mocha](https://mochajs.org/) & [Chai](http://chaijs.com/)，都支援異常測試（請看下面的程式碼示例）。如果您覺得測試每個內部函數和異常都很乏味，那麼您可以只測試REST API HTTP錯誤。
 
 
 
-### 代码示例: 使用 Mocha & Chai 确保正确的异常被抛出
+### 程式碼示例: 使用 Mocha & Chai 確保正確的異常被拋出
 
 ```javascript
 describe("Facebook chat", () => {
@@ -20,7 +20,7 @@ describe("Facebook chat", () => {
 
 ```
 
-### 代码示例: 确保 API 返回正确的 HTTP 错误码
+### 程式碼示例: 確保 API 返回正確的 HTTP 錯誤碼
 
 ```javascript
 it("Creates new Facebook group", function (done) {

@@ -1,24 +1,24 @@
-# 使用https加密客户端-服务器连接
+# 使用https加密客戶端-伺服器連線
 
 <br/><br/>
 
 
-### 一段解释
+### 一段解釋
 
-使用服务，比如[Let'sEncrypt](https://letsencrypt.org/)证书颁发机构提供 __free__ ssl/tls证书，您可以轻松地获得证书, 以确保您的应用程序安全。Node.js框架，比如[Express](http://expressjs.com/)(基于核心`https`模块) 轻松支持基于ssl/tls的服务，此外, 配置可以通过几行额外的代码完成。
+使用服務，比如[Let'sEncrypt](https://letsencrypt.org/)證書頒發機構提供 __free__ ssl/tls證書，您可以輕鬆地獲得證書, 以確保您的應用程式安全。Node.js框架，比如[Express](http://expressjs.com/)(基於核心`https`模組) 輕鬆支援基於ssl/tls的服務，此外, 配置可以通過幾行額外的程式碼完成。
 
-您还可以在指向应用程序的反向代理上配置ssl/tls，例如使用[nginx](http://nginx.org/en/docs/http/configuring_https_servers.html)或者HAProxy.
+您還可以在指向應用程式的反向代理上配置ssl/tls，例如使用[nginx](http://nginx.org/en/docs/http/configuring_https_servers.html)或者HAProxy.
 
 <br/><br/>
 
-### 代码示例 – 使用express框架启用SSL/TLS
+### 程式碼示例 – 使用express框架啟用SSL/TLS
 
 ```javascript
 const express = require('express');
 const https = require('https');
 const app = express();
 const options = {
-    // 路径应根据您的设置进行相应的更改
+    // 路徑應根據您的設定進行相應的更改
     cert: fs.readFileSync('./sslcert/fullchain.pem'),
     key: fs.readFileSync('./sslcert/privkey.pem')
 };
