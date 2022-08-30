@@ -1,6 +1,6 @@
 [✔]: assets/images/checkbox-small-blue.png
 
-# Node.js 最佳实践
+# Node.js 最佳實踐
 
 <h1 align="center">
   <img src="assets/images/banner-2.jpg" alt="Node.js Best Practices" />
@@ -17,280 +17,280 @@
  [![nodepractices](./assets/images/twitter-s.png)](https://twitter.com/nodepractices/) **Follow us on Twitter!** [**@nodepractices**](https://twitter.com/nodepractices/)
  <br/>
 
-# 欢迎! 首先您应该知道的三件事情:
-**1. 当您读到这里，实际上您读了很多关于Node.js的优秀文章 -** 这是对Node.js最佳实践中排名最高的内容的总结和分享
+# 歡迎! 首先您應該知道的三件事情:
+**1. 當您讀到這裡，實際上您讀了很多關於Node.js的優秀文章 -** 這是對Node.js最佳實踐中排名最高的內容的總結和分享
 
-**2. 这里是最大的汇集，且每周都在增长 -** 当前，超过50个最佳实现，样式指南，架构建议已经呈现。每天都有新的issue和PR被创建，以使这本在线书籍不断更新。我们很乐于见到您能在这里做出贡献，不管是修复一些代码的错误，或是提出绝妙的新想法。请查看我们的[milestones](https://github.com/goldbergyoni/nodebestpractices/milestones?direction=asc&sort=due_date&state=open)
+**2. 這裡是最大的彙集，且每週都在增長 -** 當前，超過50個最佳實現，樣式指南，架構建議已經呈現。每天都有新的issue和PR被建立，以使這本線上書籍不斷更新。我們很樂於見到您能在這裡做出貢獻，不管是修復一些程式碼的錯誤，或是提出絕妙的新想法。請檢視我們的[milestones](https://github.com/goldbergyoni/nodebestpractices/milestones?direction=asc&sort=due_date&state=open)
 
-**3. 大部分的条目包含额外的信息 -** 大部分的最佳实践条目的旁边，您将发现 **🔗Read More** 链接，它将呈现给您示例代码，博客引用和更多信息
+**3. 大部分的條目包含額外的資訊 -** 大部分的最佳實踐條目的旁邊，您將發現 **🔗Read More** 連結，它將呈現給您示例程式碼，部落格引用和更多資訊
 
 <br/><br/><br/>
 
-## [目录](#table-of-contents)
-1. [项目结构实践 (5) ](#1-project-structure-practices)
-2. [异常处理实践 (11) ](#2-error-handling-practices)
-3. [编码规范实践 (12) ](#3-code-style-practices)
-4. [测试和总体质量实践 (8) ](#4-testing-and-overall-quality-practices)
-5. [进入生产实践 (16) ](#5-going-to-production-practices)
-6. :star: 新: [安全实践(23)](#6-security-best-practices)
+## [目錄](#table-of-contents)
+1. [項目結構實踐 (5) ](#1-project-structure-practices)
+2. [異常處理實踐 (11) ](#2-error-handling-practices)
+3. [編碼規範實踐 (12) ](#3-code-style-practices)
+4. [測試和總體質量實踐 (8) ](#4-testing-and-overall-quality-practices)
+5. [進入生產實踐 (16) ](#5-going-to-production-practices)
+6. :star: 新: [安全實踐(23)](#6-security-best-practices)
 7. Performance Practices ([coming soon](https://github.com/goldbergyoni/nodebestpractices/milestones?direction=asc&sort=due_date&state=open))
 
 
 <br/><br/><br/>
-<h1 id="1-project-structure-practices"><code>1. 项目结构实践</code></h1>
+<h1 id="1-project-structure-practices"><code>1. 項目結構實踐</code></h1>
 
-## ![✔] 1.1 组件式构建你的解决方案
+## ![✔] 1.1 元件式構建你的解決方案
 
- **TL;DR:** 大型项目的最坏的隐患就是维护一个庞大的，含有几百个依赖的代码库 - 当开发人员准备整合新的需求的时候，这样一个庞然大物势必减缓了开发效率。反之，把您的代码拆分成组件，每一个组件有它自己的文件夹和代码库，并且确保每一个组件小而简单。查看正确的项目结构的例子请访问下面的 ‘更多’ 链接。
+ **TL;DR:** 大型項目的最壞的隱患就是維護一個龐大的，含有幾百個依賴的程式碼庫 - 當開發人員準備整合新的需求的時候，這樣一個龐然大物勢必減緩了開發效率。反之，把您的程式碼拆分成元件，每一個元件有它自己的資料夾和程式碼庫，並且確保每一個元件小而簡單。檢視正確的項目結構的例子請訪問下面的 ‘更多’ 連結。
 
-**否则:** 当编写新需求的开发人员逐步意识到他所做改变的影响，并担心会破坏其他的依赖模块 - 部署会变得更慢，风险更大。当所有业务逻辑没有被分开，这也会被认为很难扩展
+**否則:** 當編寫新需求的開發人員逐步意識到他所做改變的影響，並擔心會破壞其他的依賴模組 - 部署會變得更慢，風險更大。當所有業務邏輯沒有被分開，這也會被認為很難擴充套件
 
-🔗 [**更多: 组件结构**](./sections/projectstructre/breakintcomponents.chinese.md)
-
-<br/><br/>
-
-## ![✔] 1.2 分层设计组件，保持Express在特定的区域
-
-**TL;DR:** 每一个组件都应该包含'层级' - 一个专注的用于接入网络，逻辑，数据的概念。这样不仅获得一个清晰的分离考量，而且使仿真和测试系统变得异常容易。尽管这是一个普通的模式，但接口开发者易于混淆层级关系，比如把网络层的对象（Express req, res）传给业务逻辑和数据层 - 这会令您的应用彼此依赖，并且只能通过Express使用。
-
-**否则:** 对于混淆了网络层和其它层的应用，将不易于测试，执行CRON的任务，其它非-Express的调用者无法使用
-
-🔗 [**更多: 应用分层**](./sections/projectstructre/createlayers.chinese.md)
+🔗 [**更多: 元件結構**](./sections/projectstructre/breakintcomponents.chinese.md)
 
 <br/><br/>
 
-## ![✔] 1.3 封装公共模块成为NPM的包
+## ![✔] 1.2 分層設計元件，保持Express在特定的區域
 
-**TL;DR:** 由大量代码构成的一个大型应用中，贯彻全局的，比如日志，加密和其它类似的公共组件，应该进行封装，并暴露成一个私有的NPM包。这将使其在更多的代码库和项目中被使用变成了可能。
+**TL;DR:** 每一個元件都應該包含'層級' - 一個專注的用於接入網路，邏輯，資料的概念。這樣不僅獲得一個清晰的分離考量，而且使模擬和測試系統變得異常容易。儘管這是一個普通的模式，但介面開發者易於混淆層級關係，比如把網路層的物件（Express req, res）傳給業務邏輯和資料層 - 這會令您的應用彼此依賴，並且只能通過Express使用。
 
-**否则:** 您将不得不重造部署和依赖的轮子
+**否則:** 對於混淆了網路層和其它層的應用，將不易於測試，執行CRON的任務，其它非-Express的呼叫者無法使用
 
-🔗 [**更多: 通过需求构建**](./sections/projectstructre/wraputilities.chinese.md)
-
-<br/><br/>
-
-## ![✔] 1.4 分离 Express 'app' and 'server'
-
-**TL;DR:** 避免定义整个[Express](https://expressjs.com/)应用在一个单独的大文件里， 这是一个不好的习惯 - 分离您的 'Express' 定义至少在两个文件中： API声明(app.js) 和 网络相关(WWW)。对于更好的结构，是把你的API声明放在组件中。
-
-**否则:** 您的API将只能通过HTTP的调用进行测试（慢，并且很难产生测试覆盖报告）。维护一个有着上百行代码的文件也不是一个令人开心的事情。
-
-🔗 [**更多: 分离 Express 'app' and 'server'**](./sections/projectstructre/separateexpress.chinese.md)
+🔗 [**更多: 應用分層**](./sections/projectstructre/createlayers.chinese.md)
 
 <br/><br/>
 
-## ![✔] 1.5 使用易于设置环境变量，安全和分级的配置
+## ![✔] 1.3 封裝公共模組成為NPM的包
+
+**TL;DR:** 由大量程式碼構成的一個大型應用中，貫徹全局的，比如日誌，加密和其它類似的公共元件，應該進行封裝，並暴露成一個私有的NPM包。這將使其在更多的程式碼庫和項目中被使用變成了可能。
+
+**否則:** 您將不得不重造部署和依賴的輪子
+
+🔗 [**更多: 通過需求構建**](./sections/projectstructre/wraputilities.chinese.md)
+
+<br/><br/>
+
+## ![✔] 1.4 分離 Express 'app' and 'server'
+
+**TL;DR:** 避免定義整個[Express](https://expressjs.com/)應用在一個單獨的大檔案裡， 這是一個不好的習慣 - 分離您的 'Express' 定義至少在兩個檔案中： API聲明(app.js) 和 網路相關(WWW)。對於更好的結構，是把你的API聲明放在元件中。
+
+**否則:** 您的API將只能通過HTTP的呼叫進行測試（慢，並且很難產生測試覆蓋報告）。維護一個有著上百行程式碼的檔案也不是一個令人開心的事情。
+
+🔗 [**更多: 分離 Express 'app' and 'server'**](./sections/projectstructre/separateexpress.chinese.md)
+
+<br/><br/>
+
+## ![✔] 1.5 使用易於設定環境變數，安全和分級的配置
 
 
-**TL;DR:** 一个完美无瑕的配置安装应该确保 (a) 元素可以从文件中，也可以从环境变量中读取 (b) 密码排除在提交的代码之外 (c) 为了易于检索，配置是分级的。仅有几个包可以满足这样的条件，比如[rc](https://www.npmjs.com/package/rc), [nconf](https://www.npmjs.com/package/nconf), [config](https://www.npmjs.com/package/config) 和 [convict](https://www.npmjs.com/package/convict)。
+**TL;DR:** 一個完美無瑕的配置安裝應該確保 (a) 元素可以從檔案中，也可以從環境變數中讀取 (b) 密碼排除在提交的程式碼之外 (c) 為了易於檢索，配置是分級的。僅有幾個包可以滿足這樣的條件，比如[rc](https://www.npmjs.com/package/rc), [nconf](https://www.npmjs.com/package/nconf), [config](https://www.npmjs.com/package/config) 和 [convict](https://www.npmjs.com/package/convict)。
 
-**否则:** 不能满足任意的配置要求将会使开发，运维团队，或者两者，易于陷入泥潭。
+**否則:** 不能滿足任意的配置要求將會使開發，運維團隊，或者兩者，易於陷入泥潭。
 
-🔗 [**更多: 配置最佳实践**](./sections/projectstructre/configguide.chinese.md)
+🔗 [**更多: 配置最佳實踐**](./sections/projectstructre/configguide.chinese.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ 返回顶部</a></p>
+<p align="right"><a href="#table-of-contents">⬆ 返回頂部</a></p>
 
-<h1 id="2-error-handling-practices"><code>2. 错误处理最佳实践</code></h1>
+<h1 id="2-error-handling-practices"><code>2. 錯誤處理最佳實踐</code></h1>
 
-## ![✔] 2.1  使用 Async-Await 和 promises 用于异步错误处理
+## ![✔] 2.1  使用 Async-Await 和 promises 用於非同步錯誤處理
 
-**TL;DR:** 使用回调的方式处理异步错误可能是导致灾难的最快的方式(a.k.a the pyramid of doom)。对您的代码来说，最好的礼物就是使用规范的promise库或async-await来替代，这会使其像try-catch一样更加简洁，具有熟悉的代码结构。
+**TL;DR:** 使用回撥的方式處理非同步錯誤可能是導致災難的最快的方式(a.k.a the pyramid of doom)。對您的程式碼來說，最好的禮物就是使用規範的promise庫或async-await來替代，這會使其像try-catch一樣更加簡潔，具有熟悉的程式碼結構。
 
-**否则:** Node.js回调特性, function(err, response), 是导致不可维护代码的一个必然的方式。究其原因，是由于混合了随意的错误处理代码，臃肿的内嵌，蹩脚的代码模式。
+**否則:** Node.js回撥特性, function(err, response), 是導致不可維護程式碼的一個必然的方式。究其原因，是由於混合了隨意的錯誤處理程式碼，臃腫的內嵌，蹩腳的程式碼模式。
 
-🔗 [**更多: 避免回调**](./sections/errorhandling/asyncerrorhandling.chinese.md)
-
-<br/><br/>
-
-## ![✔] 2.2 仅使用内建的错误对象
-
-**TL;DR:** 很多人抛出异常使用字符串类型或一些自定义类型 - 这会导致错误处理逻辑和模块间的调用复杂化。是否您reject一个promise，抛出异常或发出(emit)错误 - 使用内建的错误对象将会增加设计一致性，并防止信息的丢失。
-
-
-**否则:** 调用某些模块，将不确定哪种错误类型会返回 - 这将会使恰当的错误处理更加困难。更坏的情况是，使用特定的类型描述错误，会导致重要的错误信息缺失，比如stack trace！
-
-🔗 [**更多: 使用内建错误对象**](./sections/errorhandling/useonlythebuiltinerror.chinese.md)
+🔗 [**更多: 避免回撥**](./sections/errorhandling/asyncerrorhandling.chinese.md)
 
 <br/><br/>
 
-## ![✔] 2.3 区分运行错误和程序设计错误
+## ![✔] 2.2 僅使用內建的錯誤物件
 
-**TL;DR:** 运行错误（例如, API接受到一个无效的输入）指的是一些已知场景下的错误，这类错误的影响已经完全被理解，并能被考虑周全的处理掉。同时，程序设计错误（例如，尝试读取未定义的变量）指的是未知的编码问题，影响到应用得当的重启。
+**TL;DR:** 很多人拋出異常使用字元串類型或一些自定義類型 - 這會導致錯誤處理邏輯和模組間的呼叫複雜化。是否您reject一個promise，拋出異常或發出(emit)錯誤 - 使用內建的錯誤物件將會增加設計一致性，並防止資訊的丟失。
 
-**否则:** 当一个错误产生的时候，您总是得重启应用，但为什么要让 ~5000 个在线用户不能访问，仅仅是因为一个细微的，可以预测的，运行时错误？相反的方案，也不完美 – 当未知的问题（程序问题）产生的时候，使应用依旧可以访问，可能导致不可预测行为。区分两者会使处理更有技巧，并在给定的上下文下给出一个平衡的对策。
 
-🔗 [**更多: 运行错误和程序设计错误**](./sections/errorhandling/operationalvsprogrammererror.chinese.md)
+**否則:** 呼叫某些模組，將不確定哪種錯誤類型會返回 - 這將會使恰當的錯誤處理更加困難。更壞的情況是，使用特定的類型描述錯誤，會導致重要的錯誤資訊缺失，比如stack trace！
 
-<br/><br/>
-
-## ![✔] 2.4 集中处理错误，不要在Express中间件中处理错误
-
-**TL;DR:** 错误处理逻辑，比如给管理员发送邮件，日志应该封装在一个特定的，集中的对象当中，这样当错误产生的时候，所有的终端（例如 Express中间件，cron任务，单元测试）都可以调用。
-
-**否则:** 错误处理的逻辑不放在一起将会导致代码重复和非常可能不恰当的错误处理。
-
-🔗 [**更多: 集中处理错误**](./sections/errorhandling/centralizedhandling.chinese.md)
+🔗 [**更多: 使用內建錯誤物件**](./sections/errorhandling/useonlythebuiltinerror.chinese.md)
 
 <br/><br/>
 
-## ![✔] 2.5 对API错误使用Swagger文档化
+## ![✔] 2.3 區分執行錯誤和程式設計錯誤
 
-**TL;DR:** 让你的API调用者知道哪种错误会返回，这样他们就能完全的处理这些错误，而不至于系统崩溃。Swagger，REST API的文档框架，通常处理这类问题。
+**TL;DR:** 執行錯誤（例如, API接受到一個無效的輸入）指的是一些已知場景下的錯誤，這類錯誤的影響已經完全被理解，並能被考慮周全的處理掉。同時，程式設計錯誤（例如，嘗試讀取未定義的變數）指的是未知的編碼問題，影響到應用得當的重啟。
 
-**否则:** 任何API的客户端可能决定崩溃并重启，仅仅因为它收到一个不能处理的错误。注意：API的调用者可能是你（在微服务环境中非常典型）。
+**否則:** 當一個錯誤產生的時候，您總是得重啟應用，但為什麼要讓 ~5000 個線上使用者不能訪問，僅僅是因為一個細微的，可以預測的，執行時錯誤？相反的方案，也不完美 – 當未知的問題（程式問題）產生的時候，使應用依舊可以訪問，可能導致不可預測行為。區分兩者會使處理更有技巧，並在給定的上下文下給出一個平衡的對策。
 
-
-🔗 [**更多: 使用Swagger记录错误**](./sections/errorhandling/documentingusingswagger.chinese.md)
-
-<br/><br/>
-
-## ![✔] 2.6 当一个特殊的情况产生，停掉服务是得体的
-
-**TL;DR:** 当一个不确定错误产生（一个开发错误，最佳实践条款#3) - 这就意味着对应用运转健全的不确定。一个普通的实践将是建议仔细地重启进程，并使用一些‘启动器’工具，比如Forever和PM2。
-
-**否则:** 当一个未知的异常被抛出，意味着某些对象包含错误的状态（例如某个全局事件发生器由于某些内在的错误，不在产生事件），未来的请求可能失败或者行为异常。
-
-🔗 [**更多: 停掉服务**](./sections/errorhandling/shuttingtheprocess.chinese.md)
+🔗 [**更多: 執行錯誤和程式設計錯誤**](./sections/errorhandling/operationalvsprogrammererror.chinese.md)
 
 <br/><br/>
 
+## ![✔] 2.4 集中處理錯誤，不要在Express中介軟體中處理錯誤
+
+**TL;DR:** 錯誤處理邏輯，比如給管理員傳送郵件，日誌應該封裝在一個特定的，集中的物件當中，這樣當錯誤產生的時候，所有的終端（例如 Express中介軟體，cron任務，單元測試）都可以呼叫。
+
+**否則:** 錯誤處理的邏輯不放在一起將會導致程式碼重複和非常可能不恰當的錯誤處理。
+
+🔗 [**更多: 集中處理錯誤**](./sections/errorhandling/centralizedhandling.chinese.md)
+
+<br/><br/>
+
+## ![✔] 2.5 對API錯誤使用Swagger文件化
+
+**TL;DR:** 讓你的API呼叫者知道哪種錯誤會返回，這樣他們就能完全的處理這些錯誤，而不至於系統崩潰。Swagger，REST API的文件框架，通常處理這類問題。
+
+**否則:** 任何API的客戶端可能決定崩潰並重啟，僅僅因為它收到一個不能處理的錯誤。注意：API的呼叫者可能是你（在微服務環境中非常典型）。
 
 
-## ![✔] 2.7 使用一个成熟的日志工具提高错误的可见性
+🔗 [**更多: 使用Swagger記錄錯誤**](./sections/errorhandling/documentingusingswagger.chinese.md)
 
-**TL;DR:** 一系列成熟的日志工具，比如Winston，Bunyan和Log4J，会加速错误的发现和理解。忘记console.log吧。
+<br/><br/>
 
-**否则:** 浏览console的log，和不通过查询工具或者一个好的日志查看器，手动浏览繁琐的文本文件，会使你忙于工作到很晚。
+## ![✔] 2.6 當一個特殊的情況產生，停掉服務是得體的
 
-🔗 [**更多: 使用好用的日志工具**](./sections/errorhandling/usematurelogger.chinese.md)
+**TL;DR:** 當一個不確定錯誤產生（一個開發錯誤，最佳實踐條款#3) - 這就意味著對應用運轉健全的不確定。一個普通的實踐將是建議仔細地重啟程序，並使用一些‘啟動器’工具，比如Forever和PM2。
 
+**否則:** 當一個未知的異常被拋出，意味著某些物件包含錯誤的狀態（例如某個全局事件發生器由於某些內在的錯誤，不在產生事件），未來的請求可能失敗或者行為異常。
+
+🔗 [**更多: 停掉服務**](./sections/errorhandling/shuttingtheprocess.chinese.md)
 
 <br/><br/>
 
 
-## ![✔] 2.8 使用你最喜欢的测试框架测试错误流
 
-**TL;DR:** 无论专业的自动化测试或者简单的手动开发测试 - 确保您的代码不仅满足正常的场景，而且处理并且返回正确的错误。测试框架，比如Mocha & Chai可以非常容易的处理这些问题（在"Gist popup"中查看代码实例） 。
+## ![✔] 2.7 使用一個成熟的日誌工具提高錯誤的可見性
 
-**否则:** 没有测试，不管自动还是手动，您不可能依赖代码去返回正确的错误。而没有可以理解的错误，那将毫无错误处理可言。
+**TL;DR:** 一系列成熟的日誌工具，比如Winston，Bunyan和Log4J，會加速錯誤的發現和理解。忘記console.log吧。
 
+**否則:** 瀏覽console的log，和不通過查詢工具或者一個好的日誌檢視器，手動瀏覽繁瑣的文字檔案，會使你忙於工作到很晚。
 
-🔗 [**更多: 测试错误流向**](./sections/errorhandling/testingerrorflows.chinese.md)
+🔗 [**更多: 使用好用的日誌工具**](./sections/errorhandling/usematurelogger.chinese.md)
 
-<br/><br/>
-
-## ![✔] 2.9 使用APM产品发现错误和宕机时间
-
-**TL;DR:** 监控和性能产品 (别名 APM) 先前一步的检测您的代码库和API，这样他们能自动的，像使用魔法一样的强调错误，宕机和您忽略的性能慢的部分。
-
-**否则:** 您花了很多的力气在测量API的性能和错误，但可能您从来没有意识到真实场景下您最慢的代码块和他们对UX的影响。
-
-
-🔗 [**更多: 使用APM产品**](./sections/errorhandling/apmproducts.chinese.md)
 
 <br/><br/>
 
 
-## ![✔] 2.10 捕获未处理的promise rejections
+## ![✔] 2.8 使用你最喜歡的測試框架測試錯誤流
 
-**TL;DR:** 任何在promise中被抛出的异常将被收回和遗弃，除非开发者没有忘记去明确的处理。即使您的代码调用的是process.uncaughtException！解决这个问题可以注册到事件process.unhandledRejection。
+**TL;DR:** 無論專業的自動化測試或者簡單的手動開發測試 - 確保您的程式碼不僅滿足正常的場景，而且處理並且返回正確的錯誤。測試框架，比如Mocha & Chai可以非常容易的處理這些問題（在"Gist popup"中檢視程式碼例項） 。
 
-**否则:** 您的错误将被回收，无踪迹可循。没有什么可以需要考虑。
+**否則:** 沒有測試，不管自動還是手動，您不可能依賴程式碼去返回正確的錯誤。而沒有可以理解的錯誤，那將毫無錯誤處理可言。
 
 
-🔗 [**更多: 捕获未处理的promise rejection**](./sections/errorhandling/catchunhandledpromiserejection.chinese.md)
+🔗 [**更多: 測試錯誤流向**](./sections/errorhandling/testingerrorflows.chinese.md)
 
 <br/><br/>
 
-## ![✔] 2.11 快速查错，验证参数使用一个专门的库
+## ![✔] 2.9 使用APM產品發現錯誤和宕機時間
 
-**TL;DR:** 这应该是您的Express最佳实践中的一部分 – assert API输入避免难以理解的漏洞，这类漏洞以后会非常难以追踪。而验证代码通常是一件乏味的事情，除非使用一些非常炫酷的帮助库比如Joi。
+**TL;DR:** 監控和效能產品 (別名 APM) 先前一步的檢測您的程式碼庫和API，這樣他們能自動的，像使用魔法一樣的強調錯誤，宕機和您忽略的效能慢的部分。
 
-**否则:** 考虑这种情况 – 您的功能期望一个数字参数 “Discount” ，然而调用者忘记传值，之后在您的代码中检查是否 Discount!=0 （允许的折扣值大于零），这样它将允许用户使用一个折扣。OMG，多么不爽的一个漏洞。你能明白吗？
+**否則:** 您花了很多的力氣在測量API的效能和錯誤，但可能您從來沒有意識到真實場景下您最慢的程式碼塊和他們對UX的影響。
 
-🔗 [**更多: 快速查错**](./sections/errorhandling/failfast.chinese.md)
+
+🔗 [**更多: 使用APM產品**](./sections/errorhandling/apmproducts.chinese.md)
+
+<br/><br/>
+
+
+## ![✔] 2.10 捕獲未處理的promise rejections
+
+**TL;DR:** 任何在promise中被拋出的異常將被收回和遺棄，除非開發者沒有忘記去明確的處理。即使您的程式碼呼叫的是process.uncaughtException！解決這個問題可以註冊到事件process.unhandledRejection。
+
+**否則:** 您的錯誤將被回收，無蹤跡可循。沒有什麼可以需要考慮。
+
+
+🔗 [**更多: 捕獲未處理的promise rejection**](./sections/errorhandling/catchunhandledpromiserejection.chinese.md)
+
+<br/><br/>
+
+## ![✔] 2.11 快速查錯，驗證參數使用一個專門的庫
+
+**TL;DR:** 這應該是您的Express最佳實踐中的一部分 – assert API輸入避免難以理解的漏洞，這類漏洞以後會非常難以追蹤。而驗證程式碼通常是一件乏味的事情，除非使用一些非常炫酷的幫助庫比如Joi。
+
+**否則:** 考慮這種情況 – 您的功能期望一個數字參數 “Discount” ，然而呼叫者忘記傳值，之後在您的程式碼中檢查是否 Discount!=0 （允許的折扣值大於零），這樣它將允許使用者使用一個折扣。OMG，多麼不爽的一個漏洞。你能明白嗎？
+
+🔗 [**更多: 快速查錯**](./sections/errorhandling/failfast.chinese.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ 返回顶部</a></p>
+<p align="right"><a href="#table-of-contents">⬆ 返回頂部</a></p>
 
-<h1 id="3-code-style-practices"><code>3. 编码风格实践</code></h1>
+<h1 id="3-code-style-practices"><code>3. 編碼風格實踐</code></h1>
 
 ## ![✔] 3.1 使用ESLint
 
-**TL;DR:** [ESLint](https://eslint.org)是检查可能的代码错误和修复代码样式的事实上的标准，不仅可以识别实际的间距问题, 而且还可以检测严重的反模式代码, 如开发人员在不分类的情况下抛出错误。尽管ESlint可以自动修复代码样式，但其他的工具比如[prettier](https://www.npmjs.com/package/prettier)和[beautify](https://www.npmjs.com/package/js-beautify)在格式化修复上功能强大，可以和Eslint结合起来使用。
+**TL;DR:** [ESLint](https://eslint.org)是檢查可能的程式碼錯誤和修復程式碼樣式的事實上的標準，不僅可以識別實際的間距問題, 而且還可以檢測嚴重的反模式程式碼, 如開發人員在不分類的情況下拋出錯誤。儘管ESlint可以自動修復程式碼樣式，但其他的工具比如[prettier](https://www.npmjs.com/package/prettier)和[beautify](https://www.npmjs.com/package/js-beautify)在格式化修復上功能強大，可以和Eslint結合起來使用。
 
-**否则:** 开发人员将必须关注单调乏味的间距和线宽问题, 并且时间可能会浪费在过多考虑项目的代码样式。
-
-<br/><br/>
-
-## ![✔] 3.2 Node.js特定的插件
-
-**TL;DR:** 除了仅仅涉及 vanilla JS 的 ESLint 标准规则，添加 Node 相关的插件，比如[eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node), [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) and [eslint-plugin-node-security](https://www.npmjs.com/package/eslint-plugin-security)
-
-**否则:** 许多错误的Node.js代码模式可能在检测下逃生。例如，开发人员可能需要某些文件，把一个变量作为路径名 (variableAsPath) ，这会导致攻击者可以执行任何JS脚本。Node.JS linters可以检测这类模式，并及早预警。
+**否則:** 開發人員將必須關注單調乏味的間距和線寬問題, 並且時間可能會浪費在過多考慮項目的程式碼樣式。
 
 <br/><br/>
 
-## ![✔] 3.3 在同一行开始一个代码块的大括号
+## ![✔] 3.2 Node.js特定的外掛
 
-**TL;DR:** 代码块的第一个大括号应该和声明的起始保持在同一行中。
+**TL;DR:** 除了僅僅涉及 vanilla JS 的 ESLint 標準規則，新增 Node 相關的外掛，比如[eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node), [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) and [eslint-plugin-node-security](https://www.npmjs.com/package/eslint-plugin-security)
 
-### 代码示例
+**否則:** 許多錯誤的Node.js程式碼模式可能在檢測下逃生。例如，開發人員可能需要某些檔案，把一個變數作為路徑名 (variableAsPath) ，這會導致攻擊者可以執行任何JS指令碼。Node.JS linters可以檢測這類模式，並及早預警。
+
+<br/><br/>
+
+## ![✔] 3.3 在同一行開始一個程式碼塊的大括號
+
+**TL;DR:** 程式碼塊的第一個大括號應該和聲明的起始保持在同一行中。
+
+### 程式碼示例
 ```javascript
-  // 建议
+  // 建議
   function someFunction() {
-    // 代码块
+    // 程式碼塊
   }
 
   // 避免
   function someFunction()
   {
-    // 代码块
+    // 程式碼塊
   }
 ```
 
-**否则:** 不遵守这项最佳实践可能导致意外的结果，在Stackoverflow的帖子中可以查看到，如下：
+**否則:** 不遵守這項最佳實踐可能導致意外的結果，在Stackoverflow的帖子中可以檢視到，如下：
 
 🔗 [**更多:** "Why does a results vary based on curly brace placement?" (Stackoverflow)](https://stackoverflow.com/questions/3641519/why-does-a-results-vary-based-on-curly-brace-placement)
 
 <br/><br/>
 
-## ![✔] 3.4 不要忘记分号
+## ![✔] 3.4 不要忘記分號
 
-**TL;DR:** 即使没有获得一致的认同，但在每一个表达式后面放置分号还是值得推荐的。这将使您的代码, 对于其他阅读代码的开发者来说，可读性，明确性更强。
+**TL;DR:** 即使沒有獲得一致的認同，但在每一個表示式後面放置分號還是值得推薦的。這將使您的程式碼, 對於其他閱讀程式碼的開發者來說，可讀性，明確性更強。
 
-**否则:** 在前面的章节里面已经提到，如果表达式的末尾没有添加分号，JavaScript的解释器会在自动添加一个，这可能会导致一些意想不到的结果。
+**否則:** 在前面的章節裡面已經提到，如果表示式的末尾沒有新增分號，JavaScript的直譯器會在自動新增一個，這可能會導致一些意想不到的結果。
 
 <br/><br/>
 
 ## ![✔] 3.5 命名您的方法
 
-**TL;DR:** 命名所有的方法，包含闭包和回调, 避免匿名方法。当剖析一个node应用的时候，这是特别有用的。命名所有的方法将会使您非常容易的理解内存快照中您正在查看的内容。
+**TL;DR:** 命名所有的方法，包含閉包和回撥, 避免匿名方法。當剖析一個node應用的時候，這是特別有用的。命名所有的方法將會使您非常容易的理解記憶體快照中您正在檢視的內容。
 
-**否则:** 使用一个核心dump（内存快照）调试线上问题，会是一项非常挑战的事项，因为你注意到的严重内存泄漏问题极有可能产生于匿名的方法。
+**否則:** 使用一個核心dump（記憶體快照）偵錯線上問題，會是一項非常挑戰的事項，因為你注意到的嚴重記憶體洩漏問題極有可能產生於匿名的方法。
 
 <br/><br/>
 
-## ![✔] 3.6 变量、常量、函数和类的命名约定
+## ![✔] 3.6 變數、常量、函數和類的命名約定
 
-**TL;DR:** 当命名变量和方法的时候，使用 ***lowerCamelCase*** ，当命名类的时候，使用 ***UpperCamelCase*** （首字母大写），对于常量，则 ***UPPERCASE*** 。这将帮助您轻松地区分普通变量/函数和需要实例化的类。使用描述性名称，但使它们尽量简短。
+**TL;DR:** 當命名變數和方法的時候，使用 ***lowerCamelCase*** ，當命名類的時候，使用 ***UpperCamelCase*** （首字母大寫），對於常量，則 ***UPPERCASE*** 。這將幫助您輕鬆地區分普通變數/函數和需要例項化的類。使用描述性名稱，但使它們儘量簡短。
 
-**否则:** JavaScript是世界上唯一一门不需要实例化，就可以直接调用构造函数（"Class"）的编码语言。因此，类和函数的构造函数由采用UpperCamelCase开始区分。
+**否則:** JavaScript是世界上唯一一門不需要例項化，就可以直接呼叫建構函式（"Class"）的編碼語言。因此，類和函數的建構函式由採用UpperCamelCase開始區分。
 
-### 代码示例 ###
+### 程式碼示例 ###
 ```javascript
-  // 使用UpperCamelCase命名类名
+  // 使用UpperCamelCase命名類名
   class SomeClassExample () {
 
-    // 常量使用const关键字，并使用lowerCamelCase命名
+    // 常量使用const關鍵字，並使用lowerCamelCase命名
     const config = {
       key: 'value'
     };
 
-    // 变量和方法使用lowerCamelCase命名
+    // 變數和方法使用lowerCamelCase命名
     let someVariableExample = 'value';
     function doSomething() {
 
@@ -301,34 +301,34 @@
 
 <br/><br/>
 
-## ![✔] 3.7 使用const优于let，废弃var
+## ![✔] 3.7 使用const優於let，廢棄var
 
-**TL;DR:** 使用`const`意味着一旦一个变量被分配，它不能被重新分配。使用const将帮助您免于使用相同的变量用于不同的用途，并使你的代码更清晰。如果一个变量需要被重新分配，以在一个循环为例，使用`let`声明它。let的另一个重要方面是，使用let声明的变量只在定义它的块作用域中可用。 `var`是函数作用域，不是块级作用域，既然您有const和let让您随意使用，那么[不应该在ES6中使用var](https://hackernoon.com/why-you-shouldnt-use-var-anymore-f109a58b9b70)。
+**TL;DR:** 使用`const`意味著一旦一個變數被分配，它不能被重新分配。使用const將幫助您免於使用相同的變數用於不同的用途，並使你的程式碼更清晰。如果一個變數需要被重新分配，以在一個迴圈為例，使用`let`聲明它。let的另一個重要方面是，使用let聲明的變數只在定義它的塊作用域中可用。 `var`是函數作用域，不是塊級作用域，既然您有const和let讓您隨意使用，那麼[不應該在ES6中使用var](https://hackernoon.com/why-you-shouldnt-use-var-anymore-f109a58b9b70)。
 
-**否则:** 当经常更改变量时，调试变得更麻烦了。
+**否則:** 當經常更改變數時，偵錯變得更麻煩了。
 
 🔗 [**更多: JavaScript ES6+: var, let, or const?** ](https://medium.com/javascript-scene/javascript-es6-var-let-or-const-ba58b8dcde75)
 
 <br/><br/>
 
-## ![✔] 3.8 先require, 而不是在方法内部
+## ![✔] 3.8 先require, 而不是在方法內部
 
-**TL;DR:** 在每个文件的起始位置，在任何函数的前面和外部require模块。这种简单的最佳实践，不仅能帮助您轻松快速地在文件顶部辨别出依赖关系，而且避免了一些潜在的问题。
+**TL;DR:** 在每個檔案的起始位置，在任何函數的前面和外部require模組。這種簡單的最佳實踐，不僅能幫助您輕鬆快速地在檔案頂部辨別出依賴關係，而且避免了一些潛在的問題。
 
-**否则:** 在Node.js中，require 是同步运行的。如果从函数中调用它们，它可能会阻塞其他请求，在更关键的时间得到处理。另外，如果所require的模块或它自己的任何依赖项抛出错误并使服务器崩溃，最好尽快查明它，如果该模块在函数中require的，则可能不是这样的情况。
+**否則:** 在Node.js中，require 是同步執行的。如果從函數中呼叫它們，它可能會阻塞其他請求，在更關鍵的時間得到處理。另外，如果所require的模組或它自己的任何依賴項拋出錯誤並使伺服器崩潰，最好儘快查明它，如果該模組在函數中require的，則可能不是這樣的情況。
 
 <br/><br/>
 
-## ![✔] 3.9 require 文件夹，而不是文件
+## ![✔] 3.9 require 資料夾，而不是檔案
 
-**TL;DR:** 当在一个文件夹中开发库/模块，放置一个文件index.js暴露模块的
-内部，这样每个消费者都会通过它。这将作为您模块的一个接口，并使未来的变化简单而不违反规则。
+**TL;DR:** 當在一個資料夾中開發庫/模組，放置一個檔案index.js暴露模組的
+內部，這樣每個消費者都會通過它。這將作為您模組的一個介面，並使未來的變化簡單而不違反規則。
 
-**否则:** 更改文件内部结构或签名可能会破坏与客户端的接口。
+**否則:** 更改檔案內部結構或簽名可能會破壞與客戶端的介面。
 
-### 代码示例
+### 程式碼示例
 ```javascript
-  // 建议
+  // 建議
   module.exports.SMSProvider = require('./SMSProvider');
   module.exports.SMSNumberResolver = require('./SMSNumberResolver');
 
@@ -342,11 +342,11 @@
 
 ## ![✔] 3.10 使用 `===` 操作符
 
-**TL;DR:** 对比弱等于 `==`，优先使用严格的全等于 `===` 。`==`将在它们转换为普通类型后比较两个变量。在 `===` 中没有类型转换，并且两个变量必须是相同的类型。
+**TL;DR:** 對比弱等於 `==`，優先使用嚴格的全等於 `===` 。`==`將在它們轉換為普通類型後比較兩個變數。在 `===` 中沒有類型轉換，並且兩個變數必須是相同的類型。
 
-**否则:** 与 `==` 操作符比较，不相等的变量可能会返回true。
+**否則:** 與 `==` 操作符比較，不相等的變數可能會返回true。
 
-### 代码示例
+### 程式碼示例
 ```javascript
 '' == '0'           // false
 0 == ''             // true
@@ -361,579 +361,579 @@ null == undefined   // true
 
 ' \t\r\n ' == 0     // true
 ```
-如果使用`===`， 上面所有语句都将返回 false。
+如果使用`===`， 上面所有語句都將返回 false。
 
 <br/><br/>
 
-## ![✔] 3.11 使用 Async Await, 避免回调
+## ![✔] 3.11 使用 Async Await, 避免回撥
 
-**TL;DR:** Node 8 LTS现已全面支持异步等待。这是一种新的方式处理异步请求，取代回调和promise。Async-await是非阻塞的，它使异步代码看起来像是同步的。您可以给你的代码的最好的礼物是用async-await提供了一个更紧凑的，熟悉的，类似try catch的代码语法。
+**TL;DR:** Node 8 LTS現已全面支援非同步等待。這是一種新的方式處理非同步請求，取代回撥和promise。Async-await是非阻塞的，它使非同步程式碼看起來像是同步的。您可以給你的程式碼的最好的禮物是用async-await提供了一個更緊湊的，熟悉的，類似try catch的程式碼語法。
 
-**否则:** 使用回调的方式处理异步错误可能是陷入困境最快的方式 - 这种方式必须面对不停地检测错误，处理别扭的代码内嵌，难以推理编码流。
+**否則:** 使用回撥的方式處理非同步錯誤可能是陷入困境最快的方式 - 這種方式必須面對不停地檢測錯誤，處理彆扭的程式碼內嵌，難以推理編碼流。
 
-🔗[**更多:** async await 1.0 引导](https://github.com/yortus/asyncawait)
+🔗[**更多:** async await 1.0 引導](https://github.com/yortus/asyncawait)
 
 <br/><br/>
 
-## ![✔] 3.12 使用 (=>) 箭头函数
+## ![✔] 3.12 使用 (=>) 箭頭函數
 
-**TL;DR:** 尽管使用 async-await 和避免方法作为参数是被推荐的, 但当处理那些接受promise和回调的老的API的时候 - 箭头函数使代码结构更加紧凑，并保持了根方法上的语义上下文 (例如 'this')。
+**TL;DR:** 儘管使用 async-await 和避免方法作為參數是被推薦的, 但當處理那些接受promise和回撥的老的API的時候 - 箭頭函數使程式碼結構更加緊湊，並保持了根方法上的語義上下文 (例如 'this')。
 
-**否则:** 更长的代码（在ES5方法中）更易于产生缺陷，并读起来很是笨重。
+**否則:** 更長的程式碼（在ES5方法中）更易於產生缺陷，並讀起來很是笨重。
 
-🔗 [**更多: 这是拥抱箭头函数的时刻**](https://medium.com/javascript-scene/familiarity-bias-is-holding-you-back-its-time-to-embrace-arrow-functions-3d37e1a9bb75)
+🔗 [**更多: 這是擁抱箭頭函數的時刻**](https://medium.com/javascript-scene/familiarity-bias-is-holding-you-back-its-time-to-embrace-arrow-functions-3d37e1a9bb75)
 
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ 返回顶部</a></p>
+<p align="right"><a href="#table-of-contents">⬆ 返回頂部</a></p>
 
 
-<h1 id="4-testing-and-overall-quality-practices"><code>4. 测试和总体的质量实践</code></h1>
+<h1 id="4-testing-and-overall-quality-practices"><code>4. 測試和總體的質量實踐</code></h1>
 
-## ![✔] 4.1 至少，编写API（组件）测试
+## ![✔] 4.1 至少，編寫API（元件）測試
 
-**TL;DR:** 大多数项目只是因为时间表太短而没有进行任何自动化测试，或者测试项目失控而正被遗弃。因此，优先从API测试开始，这是最简单的编写和提供比单元测试更多覆盖率的事情（你甚至可能不需要编码而进行API测试，像[Postman](https://www.getpostman.com/)。之后，如果您有更多的资源和时间，继续使用高级测试类型，如单元测试、DB测试、性能测试等。
+**TL;DR:** 大多數項目只是因為時間表太短而沒有進行任何自動化測試，或者測試項目失控而正被遺棄。因此，優先從API測試開始，這是最簡單的編寫和提供比單元測試更多覆蓋率的事情（你甚至可能不需要編碼而進行API測試，像[Postman](https://www.getpostman.com/)。之後，如果您有更多的資源和時間，繼續使用高階測試類型，如單元測試、DB測試、效能測試等。
 
-**否则:** 您可能需要花很长时间编写单元测试，才发现只有20%的系统覆盖率。
-
-<br/><br/>
-
-## ![✔] 4.2 使用一个linter检测代码问题
-
-**TL;DR:** 使用代码linter检查基本质量并及早检测反模式。在任何测试之前运行它, 并将其添加为预提交的git钩子, 以最小化审查和更正任何问题所需的时间。也可在[Section 3](https://github.com/goldbergyoni/nodebestpractices#3-code-style-practices)中查阅编码样式实践
-
-**否则:** 您可能让一些反模式和易受攻击的代码传递到您的生产环境中。
-
+**否則:** 您可能需要花很長時間編寫單元測試，才發現只有20%的系統覆蓋率。
 
 <br/><br/>
 
-## ![✔] 4.3 仔细挑选您的持续集成（CI）平台
+## ![✔] 4.2 使用一個linter檢測程式碼問題
 
-**TL;DR:** 您的持续集成平台（cicd）将集成各种质量工具（如测试、lint），所以它应该是一个充满活力的生态系统，包含各种插件。[jenkins](https://jenkins.io/)曾经是许多项目的默认选项，因为它有最大的社区，同时也是一个非常强大的平台，这样的代价是要求一个陡峭的学习曲线。如今，使用SaaS工具，比如[CircleCI](https://circleci.com)及其他，安装一套CI解决方案，相对是一件容易的事情。这些工具允许构建灵活的CI管道，而无需管理整个基础设施。最终，这是一个鲁棒性和速度之间的权衡 - 仔细选择您支持的方案。
+**TL;DR:** 使用程式碼linter檢查基本質量並及早檢測反模式。在任何測試之前執行它, 並將其新增為預提交的git鉤子, 以最小化審查和更正任何問題所需的時間。也可在[Section 3](https://github.com/goldbergyoni/nodebestpractices#3-code-style-practices)中查閱編碼樣式實踐
 
-**否则:** 一旦您需要一些高级定制，选择一些细分市场供应商可能会让您停滞不前。另一方面，伴随着jenkins，可能会在基础设施设置上浪费宝贵的时间。
-
-🔗 [**更多: 挑选 CI 平台**](./sections/testingandquality/citools.chinese.md)
-
-<br/><br/>
-
-## ![✔] 4.4 经常检查易受攻击的依赖
-
-**TL;DR:** 即使是那些最有名的依赖模块，比如Express，也有已知的漏洞。使用社区和商业工具，比如 🔗 [npm audit](https://docs.npmjs.com/cli/audit) ，集成在您的CI平台上，在每一次构建的时候都会被调用，这样可以很容易地解决漏洞问题。
-
-**否则:** 在没有专用工具的情况下，使代码清除漏洞，需要不断地跟踪有关新威胁的在线出版物，相当繁琐。
-
-<br/><br/>
-
-## ![✔] 4.5 测试标签化
-
-**TL;DR:**  不同的测试必须运行在不同的情景：quick smoke，IO-less，当开发者保存或提交一个文件，测试应该启动；完整的端到端的测试通常运行在一个新的pull request被提交之后，等等。这可以通过对测试用例设置标签，比如关键字像#cold #api #sanity，来完成。这样您可以对您的测试集进行grep，调用需要的子集。例如，这就是您通过[Mocha](https://mochajs.org/)仅仅调用sanity测试集所需要做的：mocha --grep 'sanity'。
-
-**否则:** 运行所有的测试，包括执行数据库查询的几十个测试，任何时候开发者进行小的改动都可能很慢，这使得开发者不愿意运行测试。
-
-<br/><br/>
-
-## ![✔] 4.6 检查测试覆盖率，它有助于识别错误的测试模式
-
-**TL;DR:** 代码覆盖工具比如 [Istanbul](https://github.com/istanbuljs/istanbuljs)/[NYC](https://github.com/istanbuljs/nyc)，很好用有3个原因：它是免费的（获得这份报告不需要任何开销），它有助于确定测试覆盖率降低的部分，以及最后但非最不重要的是它指出了测试中的不匹配：通过查看颜色标记的代码覆盖报告您可以注意到，例如，从来不会被测到的代码片段像catch语句（即测试只是调用正确的路径，而不调用应用程序发生错误时的行为）。如果覆盖率低于某个阈值，则将其设置为失败的构建。
-
-**否则:** 当你的大部分代码没有被测试覆盖时，就不会有任何自动化的度量指标告诉你了。
-
+**否則:** 您可能讓一些反模式和易受攻擊的程式碼傳遞到您的生產環境中。
 
 
 <br/><br/>
 
-## ![✔] 4.7 检查过期的依赖包
+## ![✔] 4.3 仔細挑選您的持續整合（CI）平臺
 
-**TL;DR:** 使用您的首选工具 (例如 “npm outdated” or [npm-check-updates](https://www.npmjs.com/package/npm-check-updates) 来检测已安装的过期依赖包, 将此检查注入您的 CI 管道, 甚至在严重的情况下使构建失败。例如, 当一个已安装的依赖包滞后5个补丁时 (例如:本地版本是1.3.1 的, 存储库版本是1.3.8 的), 或者它被其作者标记为已弃用, 可能会出现严重的情况 - 停掉这次构建并防止部署此版本。
+**TL;DR:** 您的持續整合平臺（cicd）將整合各種質量工具（如測試、lint），所以它應該是一個充滿活力的生態系統，包含各種外掛。[jenkins](https://jenkins.io/)曾經是許多項目的預設選項，因為它有最大的社羣，同時也是一個非常強大的平臺，這樣的代價是要求一個陡峭的學習曲線。如今，使用SaaS工具，比如[CircleCI](https://circleci.com)及其他，安裝一套CI解決方案，相對是一件容易的事情。這些工具允許構建靈活的CI管道，而無需管理整個基礎設施。最終，這是一個魯棒性和速度之間的權衡 - 仔細選擇您支援的方案。
 
-**否则:** 您的生产环境将运行已被其作者明确标记为有风险的依赖包
+**否則:** 一旦您需要一些高階定製，選擇一些細分市場供應商可能會讓您停滯不前。另一方面，伴隨著jenkins，可能會在基礎設施設定上浪費寶貴的時間。
+
+🔗 [**更多: 挑選 CI 平臺**](./sections/testingandquality/citools.chinese.md)
 
 <br/><br/>
 
-## ![✔] 4.8 对于e2e testing，使用docker-compose
+## ![✔] 4.4 經常檢查易受攻擊的依賴
 
-**TL;DR:** 端对端(e2e)测试包含现场数据，由于它依赖于很多重型服务如数据库，习惯被认为是CI过程中最薄弱的环节。Docker-compose通过制定类似生产的环境，并使用一个简单的文本文件和简单的命令，轻松化解了这个问题。它为了e2e测试，允许制作所有相关服务，数据库和隔离网络。最后但并非最不重要的一点是，它可以保持一个无状态环境，该环境在每个测试套件之前被调用，然后立即消失。
+**TL;DR:** 即使是那些最有名的依賴模組，比如Express，也有已知的漏洞。使用社羣和商業工具，比如 🔗 [npm audit](https://docs.npmjs.com/cli/audit) ，整合在您的CI平臺上，在每一次構建的時候都會被呼叫，這樣可以很容易地解決漏洞問題。
+
+**否則:** 在沒有專用工具的情況下，使程式碼清除漏洞，需要不斷地跟蹤有關新威脅的線上出版物，相當繁瑣。
+
+<br/><br/>
+
+## ![✔] 4.5 測試標籤化
+
+**TL;DR:**  不同的測試必須執行在不同的情景：quick smoke，IO-less，當開發者儲存或提交一個檔案，測試應該啟動；完整的端到端的測試通常執行在一個新的pull request被提交之後，等等。這可以通過對測試用例設定標籤，比如關鍵字像#cold #api #sanity，來完成。這樣您可以對您的測試集進行grep，呼叫需要的子集。例如，這就是您通過[Mocha](https://mochajs.org/)僅僅呼叫sanity測試集所需要做的：mocha --grep 'sanity'。
+
+**否則:** 執行所有的測試，包括執行資料庫查詢的幾十個測試，任何時候開發者進行小的改動都可能很慢，這使得開發者不願意執行測試。
+
+<br/><br/>
+
+## ![✔] 4.6 檢查測試覆蓋率，它有助於識別錯誤的測試模式
+
+**TL;DR:** 程式碼覆蓋工具比如 [Istanbul](https://github.com/istanbuljs/istanbuljs)/[NYC](https://github.com/istanbuljs/nyc)，很好用有3個原因：它是免費的（獲得這份報告不需要任何開銷），它有助於確定測試覆蓋率降低的部分，以及最後但非最不重要的是它指出了測試中的不匹配：通過檢視顏色標記的程式碼覆蓋報告您可以注意到，例如，從來不會被測到的程式碼片段像catch語句（即測試只是呼叫正確的路徑，而不呼叫應用程式發生錯誤時的行為）。如果覆蓋率低於某個閾值，則將其設定為失敗的構建。
+
+**否則:** 當你的大部分程式碼沒有被測試覆蓋時，就不會有任何自動化的度量指標告訴你了。
 
 
-**否则:** 没有docker-compose，团队必须维护一个测试数据库在每一个测试环境上，包含开发机器，保持所有数据同步，这样测试结果不会因环境不同而不同。
+
+<br/><br/>
+
+## ![✔] 4.7 檢查過期的依賴包
+
+**TL;DR:** 使用您的首選工具 (例如 “npm outdated” or [npm-check-updates](https://www.npmjs.com/package/npm-check-updates) 來檢測已安裝的過期依賴包, 將此檢查注入您的 CI 管道, 甚至在嚴重的情況下使構建失敗。例如, 當一個已安裝的依賴包滯後5個補丁時 (例如:本地版本是1.3.1 的, 儲存庫版本是1.3.8 的), 或者它被其作者標記為已棄用, 可能會出現嚴重的情況 - 停掉這次構建並防止部署此版本。
+
+**否則:** 您的生產環境將執行已被其作者明確標記為有風險的依賴包
+
+<br/><br/>
+
+## ![✔] 4.8 對於e2e testing，使用docker-compose
+
+**TL;DR:** 端對端(e2e)測試包含現場資料，由於它依賴於很多重型服務如資料庫，習慣被認為是CI過程中最薄弱的環節。Docker-compose通過制定類似生產的環境，並使用一個簡單的文字檔案和簡單的命令，輕鬆化解了這個問題。它為了e2e測試，允許製作所有相關服務，資料庫和隔離網路。最後但並非最不重要的一點是，它可以保持一個無狀態環境，該環境在每個測試套件之前被呼叫，然後立即消失。
+
+
+**否則:** 沒有docker-compose，團隊必須維護一個測試資料庫在每一個測試環境上，包含開發機器，保持所有資料同步，這樣測試結果不會因環境不同而不同。
 
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ 返回顶部</a></p>
+<p align="right"><a href="#table-of-contents">⬆ 返回頂部</a></p>
 
-<h1 id="5-going-to-production-practices"><code>5. 上线实践</code></h1>
+<h1 id="5-going-to-production-practices"><code>5. 上線實踐</code></h1>
 
-## ![✔] 5.1. 监控!
+## ![✔] 5.1. 監控!
 
-**TL;DR:** 监控是一种在顾客之前发现问题的游戏 – 显然这应该被赋予前所未有的重要性。考虑从定义你必须遵循的基本度量标准开始（我的建议在里面），到检查附加的花哨特性并选择解决所有问题的解决方案。市场已经淹没其中。点击下面的 ‘The Gist’ ，了解解决方案的概述。
+**TL;DR:** 監控是一種在顧客之前發現問題的遊戲 – 顯然這應該被賦予前所未有的重要性。考慮從定義你必須遵循的基本度量標準開始（我的建議在裡面），到檢查附加的花哨特性並選擇解決所有問題的解決方案。市場已經淹沒其中。點選下面的 ‘The Gist’ ，瞭解解決方案的概述。
 
-**否则:** 错误 === 失望的客户. 非常简单.
-
-
-🔗 [**更多: 监控!**](./sections/production/monitoring.chinese.md)
-
-<br/><br/>
-
-## ![✔] 5.2. 使用智能日志增加透明度
-
-**TL;DR:** 日志可以是调试语句的一个不能说话的仓库，或者表述应用运行过程的一个漂亮仪表板的驱动。从第1天计划您的日志平台：如何收集、存储和分析日志，以确保所需信息（例如，错误率、通过服务和服务器等完成整个事务）都能被提取出来。
-
-**否则:** 您最终像是面对一个黑盒，不知道发生了什么事情，然后你开始重新写日志语句添加额外的信息。
+**否則:** 錯誤 === 失望的客戶. 非常簡單.
 
 
-🔗 [**更多: 使用智能日志增加透明度**](./sections/production/smartlogging.chinese.md)
+🔗 [**更多: 監控!**](./sections/production/monitoring.chinese.md)
 
 <br/><br/>
 
-## ![✔] 5.3. 委托可能的一切（例如：gzip，SSL）给反向代理
+## ![✔] 5.2. 使用智慧日誌增加透明度
 
-**TL;DR:** Node处理CPU密集型任务，如gzipping，SSL termination等，表现糟糕。相反，使用一个 ‘真正’ 的中间件服务像Nginx，HAProxy或者云供应商的服务。
+**TL;DR:** 日誌可以是偵錯語句的一個不能說話的倉庫，或者表述應用執行過程的一個漂亮儀表板的驅動。從第1天計劃您的日誌平臺：如何收集、儲存和分析日誌，以確保所需資訊（例如，錯誤率、通過服務和伺服器等完成整個事務）都能被提取出來。
 
-**否则:** 可怜的单线程Node将不幸地忙于处理网络任务，而不是处理应用程序核心，性能会相应降低。
-
-
-🔗 [**更多: 委托可能的一切（例如：gzip，SSL）给反向代理**](./sections/production/delegatetoproxy.chinese.md)
-
-<br/><br/>
-
-## ![✔] 5.4. 锁住依赖
-
-**TL;DR:** 您的代码必须在所有的环境中是相同的，但是令人惊讶的是，NPM默认情况下会让依赖在不同环境下发生偏移 – 当在不同的环境中安装包的时候，它试图拿包的最新版本。克服这种问题可以利用NPM配置文件， .npmrc，告诉每个环境保存准确的（不是最新的）包的版本。另外，对于更精细的控制，使用NPM “shrinkwrap”。*更新：作为NPM5，依赖默认锁定。新的包管理工具，Yarn，也默认锁定。
-
-**否则:** QA测试通过的代码和批准的版本，在生产中表现不一致。更糟糕的是，同一生产集群中的不同服务器可能运行不同的代码。
+**否則:** 您最終像是面對一個黑盒，不知道發生了什麼事情，然後你開始重新寫日誌語句新增額外的資訊。
 
 
-🔗 [**更多: 锁住依赖**](./sections/production/lockdependencies.chinese.md)
+🔗 [**更多: 使用智慧日誌增加透明度**](./sections/production/smartlogging.chinese.md)
 
 <br/><br/>
 
-## ![✔] 5.5. 使用正确的工具保护进程正常运行
+## ![✔] 5.3. 委託可能的一切（例如：gzip，SSL）給反向代理
 
-**TL;DR:** 进程必须继续运行，并在失败时重新启动。对于简单的情况下，“重启”工具如PM2可能足够，但在今天的“Dockerized”世界 – 集群管理工具也值得考虑
+**TL;DR:** Node處理CPU密集型任務，如gzipping，SSL termination等，表現糟糕。相反，使用一個 ‘真正’ 的中介軟體服務像Nginx，HAProxy或者雲供應商的服務。
 
-**否则:** 运行几十个实例没有明确的战略和太多的工具（集群管理，docker，PM2）可能导致一个DevOps混乱
+**否則:** 可憐的單執行緒Node將不幸地忙於處理網路任務，而不是處理應用程式核心，效能會相應降低。
 
 
-🔗 [**更多: 使用正确的工具保护进程正常运行**](./sections/production/guardprocess.chinese.md)
+🔗 [**更多: 委託可能的一切（例如：gzip，SSL）給反向代理**](./sections/production/delegatetoproxy.chinese.md)
+
+<br/><br/>
+
+## ![✔] 5.4. 鎖住依賴
+
+**TL;DR:** 您的程式碼必須在所有的環境中是相同的，但是令人驚訝的是，NPM預設情況下會讓依賴在不同環境下發生偏移 – 當在不同的環境中安裝包的時候，它試圖拿包的最新版本。克服這種問題可以利用NPM配置檔案， .npmrc，告訴每個環境儲存準確的（不是最新的）包的版本。另外，對於更精細的控制，使用NPM “shrinkwrap”。*更新：作為NPM5，依賴預設鎖定。新的包管理工具，Yarn，也預設鎖定。
+
+**否則:** QA測試通過的程式碼和批准的版本，在生產中表現不一致。更糟糕的是，同一生產叢集中的不同伺服器可能執行不同的程式碼。
+
+
+🔗 [**更多: 鎖住依賴**](./sections/production/lockdependencies.chinese.md)
+
+<br/><br/>
+
+## ![✔] 5.5. 使用正確的工具保護程序正常執行
+
+**TL;DR:** 程序必須繼續執行，並在失敗時重新啟動。對於簡單的情況下，“重啟”工具如PM2可能足夠，但在今天的“Dockerized”世界 – 叢集管理工具也值得考慮
+
+**否則:** 執行幾十個例項沒有明確的戰略和太多的工具（叢集管理，docker，PM2）可能導致一個DevOps混亂
+
+
+🔗 [**更多: 使用正確的工具保護程序正常執行**](./sections/production/guardprocess.chinese.md)
 
 
 <br/><br/>
 
 ## ![✔] 5.6. 利用CPU多核
 
-**TL;DR:** 在基本形式上，node应用程序运行在单个CPU核心上，而其他都处于空闲状态。复制node进程和利用多核，这是您的职责 – 对于中小应用，您可以使用Node Cluster和PM2. 对于一个大的应用，可以考虑使用一些Docker cluster（例如k8s，ECS）复制进程或基于Linux init system（例如systemd）的部署脚本
+**TL;DR:** 在基本形式上，node應用程式執行在單個CPU核心上，而其他都處於空閒狀態。複製node程序和利用多核，這是您的職責 – 對於中小應用，您可以使用Node Cluster和PM2. 對於一個大的應用，可以考慮使用一些Docker cluster（例如k8s，ECS）複製程序或基於Linux init system（例如systemd）的部署指令碼
 
-**否则:** 您的应用可能只是使用了其可用资源中的25% (!)，甚至更少。注意，一台典型的服务器有4个或更多的CPU，默认的Node.js部署仅仅用了一个CPU（甚至使用PaaS服务，比如AWS beanstalk，也一样）。
+**否則:** 您的應用可能只是使用了其可用資源中的25% (!)，甚至更少。注意，一臺典型的伺服器有4個或更多的CPU，預設的Node.js部署僅僅用了一個CPU（甚至使用PaaS服務，比如AWS beanstalk，也一樣）。
 
 
 🔗 [**更多: 利用所有的CPU**](./sections/production/utilizecpu.chinese.md)
 
 <br/><br/>
 
-## ![✔] 5.7. 创建一个“维护端点”
+## ![✔] 5.7. 建立一個“維護端點”
 
-**TL;DR:** 在一个安全的API中暴露一组系统相关的信息，比如内存使用情况和REPL等等。尽管这里强烈建议依赖标准和作战测试工具，但一些有价值的信息和操作更容易使用代码完成。
+**TL;DR:** 在一個安全的API中暴露一組系統相關的資訊，比如記憶體使用情況和REPL等等。儘管這裡強烈建議依賴標準和作戰測試工具，但一些有價值的資訊和操作更容易使用程式碼完成。
 
-**否则:** 您会发现，您正在执行许多“诊断部署” – 将代码发送到生产中，仅仅只为了诊断目的提取一些信息。
-
-
-🔗 [**更多: 创建一个 '维护端点'**](./sections/production/createmaintenanceendpoint.chinese.md)
-
-<br/><br/>
-
-## ![✔] 5.8. 使用APM产品发现错误和宕机时间
-
-**TL;DR:** 监控和性能的产品（即APM）先前一步地评估代码库和API，自动的超过传统的监测，并测量在服务和层级上的整体用户体验。例如，一些APM产品可以突显导致最终用户负载过慢的事务，同时指出根本原因。
-
-**否则:** 你可能会花大力气测量API性能和停机时间，也许你永远不会知道，真实场景下哪个是你最慢的代码部分，这些怎么影响用户体验。
+**否則:** 您會發現，您正在執行許多“診斷部署” – 將程式碼傳送到生產中，僅僅只為了診斷目的提取一些資訊。
 
 
-🔗 [**更多: 使用APM产品发现错误和宕机时间**](./sections/production/apmproducts.chinese.md)
-
+🔗 [**更多: 建立一個 '維護端點'**](./sections/production/createmaintenanceendpoint.chinese.md)
 
 <br/><br/>
 
+## ![✔] 5.8. 使用APM產品發現錯誤和宕機時間
 
-## ![✔] 5.9. 使您的代码保持生产环境就绪
+**TL;DR:** 監控和效能的產品（即APM）先前一步地評估程式碼庫和API，自動的超過傳統的監測，並測量在服務和層級上的整體使用者體驗。例如，一些APM產品可以突顯導致終端使用者負載過慢的事務，同時指出根本原因。
 
-**TL;DR:** 在意识中抱着最终上线的想法进行编码，从第1天开始计划上线。这听起来有点模糊，所以我编写了一些与生产维护密切相关的开发技巧（点击下面的要点）
-
-**否则:** 一个世界冠军级别的IT/运维人员也不能拯救一个编码低劣的系统。
-
-
-🔗 [**更多: 使您的代码保持生产环境就绪**](./sections/production/productioncode.chinese.md)
-
-<br/><br/>
-
-## ![✔] 5.10. 测量和保护内存使用
-
-**TL;DR:** Node.js和内存有引起争论的联系：V8引擎对内存的使用有稍微的限制（1.4GB），在node的代码里面有内存泄漏的很多途径 – 因此监视node的进程内存是必须的。在小应用程序中，你可以使用shell命令周期性地测量内存，但在中等规模的应用程序中，考虑把内存监控建成一个健壮的监控系统。
-
-**否则:** 您的内存可能一天泄漏一百兆，就像曾发生在沃尔玛的一样。
+**否則:** 你可能會花大力氣測量API效能和停機時間，也許你永遠不會知道，真實場景下哪個是你最慢的程式碼部分，這些怎麼影響使用者體驗。
 
 
-🔗 [**更多: 测量和保护内存使用**](./sections/production/measurememory.chinese.md)
-
-<br/><br/>
-
-
-## ![✔] 5.11. Node外管理您的前端资源
-
-**TL;DR:** 使用专门的中间件（nginx，S3，CDN）服务前端内容，这是因为在处理大量静态文件的时候，由于node的单线程模型，它的性能很受影响。
-
-**否则:** 您的单个node线程将忙于传输成百上千的html/图片/angular/react文件，而不是分配其所有的资源为了其擅长的任务 – 服务动态内容
-
-
-🔗 [**更多: Node外管理您的前端资源**](./sections/production/frontendout.chinese.md)
-
-<br/><br/>
-
-
-## ![✔] 5.12. 保持无状态，几乎每天都要停下服务器
-
-**TL;DR:** 在外部数据存储上，存储任意类型数据（例如用户会话，缓存，上传文件）。考虑间隔地停掉您的服务器或者使用 ‘serverless’ 平台（例如 AWS Lambda），这是一个明确的强化无状态的行为。
-
-**否则:** 某个服务器上的故障将导致应用程序宕机，而不仅仅是停用故障机器。此外，由于依赖特定服务器，伸缩弹性会变得更具挑战性。
-
-
-🔗 [**更多: 保持无状态，几乎每天都要停下服务器**](./sections/production/bestateless.chinese.md)
+🔗 [**更多: 使用APM產品發現錯誤和宕機時間**](./sections/production/apmproducts.chinese.md)
 
 
 <br/><br/>
 
 
-## ![✔] 5.13. 使用自动检测漏洞的工具
+## ![✔] 5.9. 使您的程式碼保持生產環境就緒
 
-**TL;DR:** 即使是最有信誉的依赖项，比如Express，会有使系统处于危险境地的已知漏洞（随着时间推移）。通过使用社区的或者商业工具，不时的检查漏洞和警告（本地或者Github上），这类问题很容易被抑制，有些问题甚至可以立即修补。
+**TL;DR:** 在意識中抱著最終上線的想法進行編碼，從第1天開始計劃上線。這聽起來有點模糊，所以我編寫了一些與生產維護密切相關的開發技巧（點選下面的要點）
 
-**否则:** 否则: 在没有专用工具的情况下，使代码清除漏洞，需要不断地跟踪有关新威胁的在线出版物。相当繁琐。
+**否則:** 一個世界冠軍級別的IT/運維人員也不能拯救一個編碼低劣的系統。
 
 
-🔗 [**更多: 使用自动检测漏洞的工具**](./sections/production/detectvulnerabilities.chinese.md)
+🔗 [**更多: 使您的程式碼保持生產環境就緒**](./sections/production/productioncode.chinese.md)
+
+<br/><br/>
+
+## ![✔] 5.10. 測量和保護記憶體使用
+
+**TL;DR:** Node.js和記憶體有引起爭論的聯絡：V8引擎對記憶體的使用有稍微的限制（1.4GB），在node的程式碼裡面有記憶體洩漏的很多途徑 – 因此監視node的程序記憶體是必須的。在小應用程式中，你可以使用shell命令週期性地測量記憶體，但在中等規模的應用程式中，考慮把記憶體監控建成一個健壯的監控系統。
+
+**否則:** 您的記憶體可能一天洩漏一百兆，就像曾發生在沃爾瑪的一樣。
+
+
+🔗 [**更多: 測量和保護記憶體使用**](./sections/production/measurememory.chinese.md)
 
 <br/><br/>
 
 
-## ![✔] 5.14. 在每一个log语句中指明 ‘TransactionId’
+## ![✔] 5.11. Node外管理您的前端資源
 
-**TL;DR:** 在每一个请求的每一条log入口，指明同一个标识符，transaction-id: {某些值}。然后在检查日志中的错误时，很容易总结出前后发生的事情。不幸的是，由于Node异步的天性自然，这是不容易办到的，看下代码里面的例子
+**TL;DR:** 使用專門的中介軟體（nginx，S3，CDN）服務前端內容，這是因為在處理大量靜態檔案的時候，由於node的單執行緒模型，它的效能很受影響。
 
-**否则:** 在没有上下文的情况下查看生产错误日志，这会使问题变得更加困难和缓慢去解决。
-
-
-🔗 [**更多: 在每一个log语句中指明 ‘TransactionId’**](./sections/production/assigntransactionid.chinese.md)
-
-<br/><br/>
+**否則:** 您的單個node執行緒將忙於傳輸成百上千的html/圖片/angular/react檔案，而不是分配其所有的資源為了其擅長的任務 – 服務動態內容
 
 
-## ![✔] 5.15. 设置NODE_ENV=production
-
-**TL;DR:** 设置环境变量NODE_ENV为‘production’ 或者 ‘development’，这是一个是否激活上线优化的标志 - 很多NPM的包通过它来判断当前的环境，据此优化生产环境代码。
-
-**否则:** 遗漏这个简单的属性可能大幅减弱性能。例如，在使用Express作为服务端渲染页面的时候，如果未设置NODE_ENV，性能将会减慢大概三分之一！
-
-
-🔗 [**更多: 设置NODE_ENV=production**](./sections/production/setnodeenv.chinese.md)
-
+🔗 [**更多: Node外管理您的前端資源**](./sections/production/frontendout.chinese.md)
 
 <br/><br/>
 
 
-## ![✔] 5.16. 设计自动化、原子化和零停机时间部署
+## ![✔] 5.12. 保持無狀態，幾乎每天都要停下伺服器
 
-**TL;DR:** 研究表明，执行许多部署的团队降低了严重上线问题的可能性。不需要危险的手动步骤和服务停机时间的快速和自动化部署大大改善了部署过程。你应该达到使用Docker结合CI工具，使他们成为简化部署的行业标准。
+**TL;DR:** 在外部資料儲存上，儲存任意類型資料（例如使用者會話，快取，上傳檔案）。考慮間隔地停掉您的伺服器或者使用 ‘serverless’ 平臺（例如 AWS Lambda），這是一個明確的強化無狀態的行為。
 
-**否则:** 长时间部署 -> 线上宕机 & 和人相关的错误 -> 团队部署时不自信 -> 更少的部署和需求
+**否則:** 某個伺服器上的故障將導致應用程式宕機，而不僅僅是停用故障機器。此外，由於依賴特定伺服器，伸縮彈性會變得更具挑戰性。
+
+
+🔗 [**更多: 保持無狀態，幾乎每天都要停下伺服器**](./sections/production/bestateless.chinese.md)
+
+
+<br/><br/>
+
+
+## ![✔] 5.13. 使用自動檢測漏洞的工具
+
+**TL;DR:** 即使是最有信譽的依賴項，比如Express，會有使系統處於危險境地的已知漏洞（隨著時間推移）。通過使用社羣的或者商業工具，不時的檢查漏洞和警告（本地或者Github上），這類問題很容易被抑制，有些問題甚至可以立即修補。
+
+**否則:** 否則: 在沒有專用工具的情況下，使程式碼清除漏洞，需要不斷地跟蹤有關新威脅的線上出版物。相當繁瑣。
+
+
+🔗 [**更多: 使用自動檢測漏洞的工具**](./sections/production/detectvulnerabilities.chinese.md)
+
+<br/><br/>
+
+
+## ![✔] 5.14. 在每一個log語句中指明 ‘TransactionId’
+
+**TL;DR:** 在每一個請求的每一條log入口，指明同一個標識符，transaction-id: {某些值}。然後在檢查日誌中的錯誤時，很容易總結出前後發生的事情。不幸的是，由於Node非同步的天性自然，這是不容易辦到的，看下程式碼裡面的例子
+
+**否則:** 在沒有上下文的情況下檢視生產錯誤日誌，這會使問題變得更加困難和緩慢去解決。
+
+
+🔗 [**更多: 在每一個log語句中指明 ‘TransactionId’**](./sections/production/assigntransactionid.chinese.md)
+
+<br/><br/>
+
+
+## ![✔] 5.15. 設定NODE_ENV=production
+
+**TL;DR:** 設定環境變數NODE_ENV為‘production’ 或者 ‘development’，這是一個是否啟用上線優化的標誌 - 很多NPM的包通過它來判斷當前的環境，據此優化生產環境程式碼。
+
+**否則:** 遺漏這個簡單的屬性可能大幅減弱效能。例如，在使用Express作為服務端渲染頁面的時候，如果未設定NODE_ENV，效能將會減慢大概三分之一！
+
+
+🔗 [**更多: 設定NODE_ENV=production**](./sections/production/setnodeenv.chinese.md)
+
+
+<br/><br/>
+
+
+## ![✔] 5.16. 設計自動化、原子化和零停機時間部署
+
+**TL;DR:** 研究表明，執行許多部署的團隊降低了嚴重上線問題的可能性。不需要危險的手動步驟和服務停機時間的快速和自動化部署大大改善了部署過程。你應該達到使用Docker結合CI工具，使他們成為簡化部署的行業標準。
+
+**否則:** 長時間部署 -> 線上宕機 & 和人相關的錯誤 -> 團隊部署時不自信 -> 更少的部署和需求
 
 <br/><br/>
 
 ## ![✔] 5.17. 使用 Node.js 的 LTS 版本
 
-**TL;DR:** 确保您是使用LTS版本的Node.js来获取关键的错误修复、安全更新和性能改进。
+**TL;DR:** 確保您是使用LTS版本的Node.js來獲取關鍵的錯誤修復、安全更新和效能改進。
 
-**否则:** 新发现的错误或漏洞可能会被用于生产环境中运行的应用程序，您的应用程序可能会变得难以维护且不受各种模块支持.
+**否則:** 新發現的錯誤或漏洞可能會被用於生產環境中執行的應用程式，您的應用程式可能會變得難以維護且不受各種模組支援.
 
 
 🔗 [**更多: 使用node.js的LTS版本**](./sections/production/LTSrelease.chinese.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ 返回顶部</a></p>
+<p align="right"><a href="#table-of-contents">⬆ 返回頂部</a></p>
 
-<h1 id="6-security-best-practices"><code>6. 安全最佳实践</code></h1>
+<h1 id="6-security-best-practices"><code>6. 安全最佳實踐</code></h1>
 
 <div align="center">
 <img src="https://img.shields.io/badge/OWASP%20Threats-Top%2010-green.svg" alt="53 items"/>
 </div>
 
-## ![✔] 6.1. 拥护linter安全准则
+## ![✔] 6.1. 擁護linter安全準則
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20XSS%20-green.svg" alt=""/></a>
 
-**TL;DR:** 使用安全相关的linter插件，比如[eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security)，尽早捕获安全隐患或者问题，最好在编码阶段。这能帮助察觉安全的问题，比如使用eval，调用子进程，或者根据字面含义（比如，用户输入）引入模块等等。点击下面‘更多’获得一个安全linter可以检测到的代码示例。
+**TL;DR:** 使用安全相關的linter外掛，比如[eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security)，儘早捕獲安全隱患或者問題，最好在編碼階段。這能幫助察覺安全的問題，比如使用eval，呼叫子程序，或者根據字面含義（比如，使用者輸入）引入模組等等。點選下面‘更多’獲得一個安全linter可以檢測到的程式碼示例。
 
-**Otherwise:** 在开发过程中, 可能一个直白的安全隐患, 成为生产环境中一个严重问题。此外, 项目可能没有遵循一致的安全规范, 而导致引入漏洞, 或敏感信息被提交到远程仓库中。
+**Otherwise:** 在開發過程中, 可能一個直白的安全隱患, 成為生產環境中一個嚴重問題。此外, 項目可能沒有遵循一致的安全規範, 而導致引入漏洞, 或敏感資訊被提交到遠端倉庫中。
 
-🔗 [**更多: Lint 规范**](./sections/security/lintrules.md)
+🔗 [**更多: Lint 規範**](./sections/security/lintrules.md)
 
 <br/><br/>
 
-## ![✔] 6.2. 使用中间件限制并发请求
+## ![✔] 6.2. 使用中介軟體限制併發請求
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** DOS攻击非常流行而且相对容易处理。使用外部服务，比如cloud负载均衡, cloud防火墙, nginx, 或者（对于小的，不是那么重要的app）一个速率限制中间件(比如[express-rate-limit](https://www.npmjs.com/package/express-rate-limit))，来实现速率限制。
+**TL;DR:** DOS攻擊非常流行而且相對容易處理。使用外部服務，比如cloud負載均衡, cloud防火牆, nginx, 或者（對於小的，不是那麼重要的app）一個速率限制中介軟體(比如[express-rate-limit](https://www.npmjs.com/package/express-rate-limit))，來實現速率限制。
 
-**否则:** 应用程序可能受到攻击, 导致拒绝服务, 在这种情况下, 真实用户会遭受服务降级或不可用。
+**否則:** 應用程式可能受到攻擊, 導致拒絕服務, 在這種情況下, 真實使用者會遭受服務降級或不可用。
 
-🔗 [**更多: 实施速率限制**](./sections/security/limitrequests.md)
+🔗 [**更多: 實施速率限制**](./sections/security/limitrequests.md)
 
 <br/><br/>
 
-## ![✔] 6.3 把机密信息从配置文件中抽离出来，或者使用包对其加密
+## ![✔] 6.3 把機密資訊從配置檔案中抽離出來，或者使用包對其加密
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A3:Sensitive%20Data%20Exposure%20-green.svg" alt=""/></a>
 
-**TL;DR:** 不要在配置文件或源代码中存储纯文本机密信息。相反, 使用诸如Vault产品、Kubernetes/Docker Secrets或使用环境变量之类的安全管理系统。最后一个结果是, 存储在源代码管理中的机密信息必须进行加密和管理 (滚动密钥(rolling keys)、过期时间、审核等)。使用pre-commit/push钩子防止意外提交机密信息。
+**TL;DR:** 不要在配置檔案或原始碼中儲存純文字機密資訊。相反, 使用諸如Vault產品、Kubernetes/Docker Secrets或使用環境變數之類的安全管理系統。最後一個結果是, 儲存在原始碼管理中的機密資訊必須進行加密和管理 (滾動金鑰(rolling keys)、過期時間、稽覈等)。使用pre-commit/push鉤子防止意外提交機密資訊。
 
-**否则:** 源代码管理, 即使对于私有仓库, 也可能会被错误地公开, 此时所有的秘密信息都会被公开。外部组织的源代码管理的访问权限将无意中提供对相关系统 (数据库、api、服务等) 的访问。
+**否則:** 原始碼管理, 即使對於私有倉庫, 也可能會被錯誤地公開, 此時所有的祕密資訊都會被公開。外部組織的原始碼管理的訪問許可權將無意中提供對相關係統 (資料庫、api、服務等) 的訪問。
 
 🔗 [**更多: 安全管理**](./sections/security/secretmanagement.md)
 
 <br/><br/>
 
-## ![✔] 6.4. 使用 ORM/ODM 库防止查询注入漏洞
+## ![✔] 6.4. 使用 ORM/ODM 庫防止查詢注入漏洞
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a>
 
-**TL;DR:** 要防止 SQL/NoSQL 注入和其他恶意攻击, 请始终使用 ORM/ODM 或database库来转义数据或支持命名的或索引的参数化查询, 并注意验证用户输入的预期类型。不要只使用JavaScript模板字符串或字符串串联将值插入到查询语句中, 因为这会将应用程序置于广泛的漏洞中。所有知名的Node.js数据访问库(例如[Sequelize](https://github.com/sequelize/sequelize), [Knex](https://github.com/tgriesser/knex), [mongoose](https://github.com/Automattic/mongoose))包含对注入漏洞的内置包含措施。
+**TL;DR:** 要防止 SQL/NoSQL 注入和其他惡意攻擊, 請始終使用 ORM/ODM 或database庫來轉義資料或支援命名的或索引的參數化查詢, 並注意驗證使用者輸入的預期類型。不要只使用JavaScript模板字元串或字元串串聯將值插入到查詢語句中, 因為這會將應用程式置於廣泛的漏洞中。所有知名的Node.js資料訪問庫(例如[Sequelize](https://github.com/sequelize/sequelize), [Knex](https://github.com/tgriesser/knex), [mongoose](https://github.com/Automattic/mongoose))包含對注入漏洞的內建包含措施。
 
-**否则:** 未经验证或未脱敏处理的用户输入，可能会导致操作员在使用MongoDB进行NoSQL操作时进行注入, 而不使用适当的过滤系统或ORM很容易导致SQL注入攻击, 从而造成巨大的漏洞。
+**否則:** 未經驗證或未脫敏處理的使用者輸入，可能會導致操作員在使用MongoDB進行NoSQL操作時進行注入, 而不使用適當的過濾系統或ORM很容易導致SQL隱碼攻擊, 從而造成巨大的漏洞。
 
-🔗 [**更多: 使用 ORM/ODM 库防止查询注入**](./sections/security/ormodmusage.md)
-
-<br/><br/>
-
-## ![✔] 6.5. 通用安全最佳实践集合
-
-**TL;DR:** 这些是与Node.js不直接相关的安全建议的集合-Node的实现与任何其他语言没有太大的不同。单击 "阅读更多" 浏览。
-
-🔗 [**更多: 通用安全最佳实践**](./sections/security/commonsecuritybestpractices.md)
+🔗 [**更多: 使用 ORM/ODM 庫防止查詢注入**](./sections/security/ormodmusage.md)
 
 <br/><br/>
 
-## ![✔] 6.6. 调整 HTTP 响应头以加强安全性
+## ![✔] 6.5. 通用安全最佳實踐集合
+
+**TL;DR:** 這些是與Node.js不直接相關的安全建議的集合-Node的實現與任何其他語言沒有太大的不同。單擊 "閱讀更多" 瀏覽。
+
+🔗 [**更多: 通用安全最佳實踐**](./sections/security/commonsecuritybestpractices.md)
+
+<br/><br/>
+
+## ![✔] 6.6. 調整 HTTP 響應頭以加強安全性
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** 应用程序应该使用安全的header来防止攻击者使用常见的攻击方式，诸如跨站点脚本(XSS)、点击劫持和其他恶意攻击。可以使用模块，比如 [helmet](https://www.npmjs.com/package/helmet)轻松进行配置。
+**TL;DR:** 應用程式應該使用安全的header來防止攻擊者使用常見的攻擊方式，諸如跨站點指令碼(XSS)、點選劫持和其他惡意攻擊。可以使用模組，比如 [helmet](https://www.npmjs.com/package/helmet)輕鬆進行配置。
 
-**否则:** 攻击者可以对应用程序的用户进行直接攻击, 导致巨大的安全漏洞
+**否則:** 攻擊者可以對應用程式的使用者進行直接攻擊, 導致巨大的安全漏洞
 
-🔗 [**更多: 在应用程序中使用安全的header**](./sections/security/secureheaders.md)
+🔗 [**更多: 在應用程式中使用安全的header**](./sections/security/secureheaders.md)
 
 <br/><br/>
 
-## ![✔] 6.7. 经常自动检查易受攻击的依赖库
+## ![✔] 6.7. 經常自動檢查易受攻擊的依賴庫
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Known%20Vulnerabilities%20-green.svg" alt=""/></a>
 
-**TL;DR:** 在npm的生态系统中, 一个项目有许多依赖是很常见的。在找到新的漏洞时, 应始终将依赖项保留在检查中。使用工具，类似于[npm audit](https://docs.npmjs.com/cli/audit) 或者 [snyk](https://snyk.io/)跟踪、监视和修补易受攻击的依赖项。将这些工具与 CI 设置集成, 以便在将其上线之前捕捉到易受攻击的依赖库。
+**TL;DR:** 在npm的生態系統中, 一個項目有許多依賴是很常見的。在找到新的漏洞時, 應始終將依賴項保留在檢查中。使用工具，類似於[npm audit](https://docs.npmjs.com/cli/audit) 或者 [snyk](https://snyk.io/)跟蹤、監視和修補易受攻擊的依賴項。將這些工具與 CI 設定整合, 以便在將其上線之前捕捉到易受攻擊的依賴庫。
 
-**否则:** 攻击者可以检测到您的web框架并攻击其所有已知的漏洞。
+**否則:** 攻擊者可以檢測到您的web框架並攻擊其所有已知的漏洞。
 
-🔗 [**更多: 安全依赖**](./sections/security/dependencysecurity.md)
+🔗 [**更多: 安全依賴**](./sections/security/dependencysecurity.md)
 
 <br/><br/>
 
-## ![✔] 6.8. 避免使用Node.js的crypto库处理密码，使用Bcrypt
+## ![✔] 6.8. 避免使用Node.js的crypto庫處理密碼，使用Bcrypt
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** 密码或机密信息(API密钥)应该使用安全的哈希+salt函数(如 "bcrypt")来存储, 因为性能和安全原因, 这应该是其JavaScript实现的首选。
+**TL;DR:** 密碼或機密資訊(API金鑰)應該使用安全的雜湊+salt函數(如 "bcrypt")來儲存, 因為效能和安全原因, 這應該是其JavaScript實現的首選。
 
-**否则:** 在不使用安全功能的情况下，保存的密码或秘密信息容易受到暴力破解和字典攻击, 最终会导致他们的泄露。
+**否則:** 在不使用安全功能的情況下，儲存的密碼或祕密資訊容易受到暴力破解和字典攻擊, 最終會導致他們的洩露。
 
 🔗 [**更多: 使用Bcrypt**](./sections/security/bcryptpasswords.chinese.md)
 
 <br/><br/>
 
-## ![✔] 6.9. 转义 HTML、JS 和 CSS 输出
+## ![✔] 6.9. 轉義 HTML、JS 和 CSS 輸出
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a>
 
-**TL;DR:** 发送给浏览器的不受信任数据可能会被执行, 而不是显示, 这通常被称为跨站点脚本(XSS)攻击。使用专用库将数据显式标记为不应执行的纯文本内容(例如:编码、转义)，可以减轻这种问题。
+**TL;DR:** 傳送給瀏覽器的不受信任資料可能會被執行, 而不是顯示, 這通常被稱為跨站點指令碼(XSS)攻擊。使用專用庫將資料顯式標記為不應執行的純文字內容(例如:編碼、轉義)，可以減輕這種問題。
 
-**否则:** 攻击者可能会将恶意的JavaScript代码存储在您的DB中, 然后将其发送给可怜的客户端。
+**否則:** 攻擊者可能會將惡意的JavaScript程式碼儲存在您的DB中, 然後將其傳送給可憐的客戶端。
 
-🔗 [**更多: 转义输出**](./sections/security/escape-output.md)
+🔗 [**更多: 轉義輸出**](./sections/security/escape-output.md)
 
 <br/><br/>
 
-## ![✔] 6.10. 验证传入的JSON schemas
+## ![✔] 6.10. 驗證傳入的JSON schemas
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7: XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A8:Insecured%20Deserialization%20-green.svg" alt=""/></a>
 
-**TL;DR:** 验证传入请求的body payload，并确保其符合预期要求, 如果没有, 则快速报错。为了避免每个路由中繁琐的验证编码, 您可以使用基于JSON的轻量级验证架构，比如[jsonschema](https://www.npmjs.com/package/jsonschema) or [joi](https://www.npmjs.com/package/joi)
+**TL;DR:** 驗證傳入請求的body payload，並確保其符合預期要求, 如果沒有, 則快速報錯。為了避免每個路由中繁瑣的驗證編碼, 您可以使用基於JSON的輕量級驗證架構，比如[jsonschema](https://www.npmjs.com/package/jsonschema) or [joi](https://www.npmjs.com/package/joi)
 
-**否则:** 您疏忽和宽松的方法大大增加了攻击面, 并鼓励攻击者尝试许多输入, 直到他们找到一些组合, 使应用程序崩溃。
+**否則:** 您疏忽和寬鬆的方法大大增加了攻擊面, 並鼓勵攻擊者嘗試許多輸入, 直到他們找到一些組合, 使應用程式崩潰。
 
-🔗 [**更多: 验证传入的JSON schemas**](./sections/security/validation.md)
+🔗 [**更多: 驗證傳入的JSON schemas**](./sections/security/validation.md)
 
 <br/><br/>
 
-## ![✔] 6.11. 支持黑名单的JWT
+## ![✔] 6.11. 支援黑名單的JWT
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** 当使用JSON Web Tokens(例如, 通过[Passport.js](https://github.com/jaredhanson/passport)), 默认情况下, 没有任何机制可以从发出的令牌中撤消访问权限。一旦发现了一些恶意用户活动, 只要它们持有有效的标记, 就无法阻止他们访问系统。通过实现一个不受信任令牌的黑名单，并在每个请求上验证，来减轻此问题。
+**TL;DR:** 當使用JSON Web Tokens(例如, 通過[Passport.js](https://github.com/jaredhanson/passport)), 預設情況下, 沒有任何機制可以從發出的令牌中撤消訪問許可權。一旦發現了一些惡意使用者活動, 只要它們持有有效的標記, 就無法阻止他們訪問系統。通過實現一個不受信任令牌的黑名單，並在每個請求上驗證，來減輕此問題。
 
-**否则:** 过期或错误的令牌可能被第三方恶意使用，以访问应用程序，并模拟令牌的所有者。
+**否則:** 過期或錯誤的令牌可能被第三方惡意使用，以訪問應用程式，並模擬令牌的所有者。
 
-🔗 [**更多: 为JSON Web Token添加黑名单**](./sections/security/expirejwt.md)
+🔗 [**更多: 為JSON Web Token新增黑名單**](./sections/security/expirejwt.md)
 
 <br/><br/>
 
-## ![✔] 6.12. 限制每个用户允许的登录请求
+## ![✔] 6.12. 限制每個使用者允許的登入請求
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** 一类保护暴力破解的中间件，比如[express-brute](https://www.npmjs.com/package/express-brute)，应该被用在express的应用中，来防止暴力/字典攻击；这类攻击主要应用于一些敏感路由，比如/admin 或者 /login，基于某些请求属性, 如用户名, 或其他标识符, 如正文参数等。
+**TL;DR:** 一類保護暴力破解的中介軟體，比如[express-brute](https://www.npmjs.com/package/express-brute)，應該被用在express的應用中，來防止暴力/字典攻擊；這類攻擊主要應用於一些敏感路由，比如/admin 或者 /login，基於某些請求屬性, 如使用者名稱, 或其他標識符, 如正文參數等。
 
-**否则:** 攻击者可以发出无限制的密码匹配尝试, 以获取对应用程序中特权帐户的访问权限。
+**否則:** 攻擊者可以發出無限制的密碼匹配嘗試, 以獲取對應用程式中特權帳戶的訪問許可權。
 
-🔗 [**更多: 限制登录频率**](./sections/security/login-rate-limit.md)
+🔗 [**更多: 限制登入頻率**](./sections/security/login-rate-limit.md)
 
 <br/><br/>
 
-## ![✔] 6.13. 使用非root用户运行Node.js
+## ![✔] 6.13. 使用非root使用者執行Node.js
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A5-Broken_Access_Control" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A5:Broken%20Access%20Access%20Control-green.svg" alt=""/></a>
 
-**TL;DR:** Node.js作为一个具有无限权限的root用户运行，这是一种普遍的情景。例如，在Docker容器中，这是默认行为。建议创建一个非root用户，并保存到Docker镜像中（下面给出了示例），或者通过调用带有"-u username" 的容器来代表此用户运行该进程。
+**TL;DR:** Node.js作為一個具有無限許可權的root使用者執行，這是一種普遍的情景。例如，在Docker容器中，這是預設行為。建議建立一個非root使用者，並儲存到Docker映象中（下面給出了示例），或者通過呼叫帶有"-u username" 的容器來代表此使用者執行該程序。
 
-**否则:** 在服务器上运行脚本的攻击者在本地计算机上获得无限制的权利 (例如，改变iptable，引流到他的服务器上)
+**否則:** 在伺服器上執行指令碼的攻擊者在本地計算機上獲得無限制的權利 (例如，改變iptable，引流到他的伺服器上)
 
-🔗 [**更多: 使用非root用户运行Node.js**](./sections/security/non-root-user.md)
+🔗 [**更多: 使用非root使用者執行Node.js**](./sections/security/non-root-user.md)
 
 <br/><br/>
 
-## ![✔] 6.14. 使用反向代理或中间件限制负载大小
+## ![✔] 6.14. 使用反向代理或中介軟體限制負載大小
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A8:Insecured%20Deserialization%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** 请求body有效载荷越大, Node.js的单线程就越难处理它。这是攻击者在没有大量请求(DOS/DDOS 攻击)的情况下，就可以让服务器跪下的机会。在边缘上（例如，防火墙，ELB）限制传入请求的body大小，或者通过配置[express body parser](https://github.com/expressjs/body-parser)仅接收小的载荷，可以减轻这种问题。
+**TL;DR:** 請求body有效載荷越大, Node.js的單執行緒就越難處理它。這是攻擊者在沒有大量請求(DOS/DDOS 攻擊)的情況下，就可以讓伺服器跪下的機會。在邊緣上（例如，防火牆，ELB）限制傳入請求的body大小，或者通過配置[express body parser](https://github.com/expressjs/body-parser)僅接收小的載荷，可以減輕這種問題。
 
-**否则:** 您的应用程序将不得不处理大的请求, 无法处理它必须完成的其他重要工作, 从而导致对DOS攻击的性能影响和脆弱性。
+**否則:** 您的應用程式將不得不處理大的請求, 無法處理它必須完成的其他重要工作, 從而導致對DOS攻擊的效能影響和脆弱性。
 
-🔗 [**更多: 限制负载大小**](./sections/security/requestpayloadsizelimit.md)
+🔗 [**更多: 限制負載大小**](./sections/security/requestpayloadsizelimit.md)
 
 <br/><br/>
 
-## ![✔] 6.15. 避免JavaScript的eval声明
+## ![✔] 6.15. 避免JavaScript的eval聲明
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** `eval` 是邪恶的, 因为它允许在运行时执行自定义的JavaScript代码。这不仅是一个性能方面的问题, 而且也是一个重要的安全问题, 因为恶意的JavaScript代码可能来源于用户输入。应该避免的另一种语言功能是 `new Function` 构造函数。`setTimeout` 和 `setInterval` 也不应该传入动态JavaScript代码。
+**TL;DR:** `eval` 是邪惡的, 因為它允許在執行時執行自定義的JavaScript程式碼。這不僅是一個效能方面的問題, 而且也是一個重要的安全問題, 因為惡意的JavaScript程式碼可能來源於使用者輸入。應該避免的另一種語言功能是 `new Function` 建構函式。`setTimeout` 和 `setInterval` 也不應該傳入動態JavaScript程式碼。
 
-**否则:** 恶意JavaScript代码查找传入 `eval` 或其他实时判断的JavaScript函数的文本的方法, 并将获得在该页面上javascript权限的完全访问权。此漏洞通常表现为XSS攻击。
+**否則:** 惡意JavaScript程式碼查詢傳入 `eval` 或其他實時判斷的JavaScript函數的文字的方法, 並將獲得在該頁面上javascript許可權的完全訪問權。此漏洞通常表現為XSS攻擊。
 
-🔗 [**更多: 避免JavaScript的eval声明**](./sections/security/avoideval.chinese.md)
+🔗 [**更多: 避免JavaScript的eval聲明**](./sections/security/avoideval.chinese.md)
 
 <br/><br/>
 
-## ![✔] 6.16. 防止恶意RegEx让Node.js的单线程过载执行
+## ![✔] 6.16. 防止惡意RegEx讓Node.js的單執行緒過載執行
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** 正则表达式，在方便的同时，对JavaScript应用构成了真正的威胁，特别是Node.js平台。匹配文本的用户输入需要大量的CPU周期来处理。在某种程度上，正则处理是效率低下的，比如验证10个单词的单个请求可能阻止整个event loop长达6秒，并让CPU引火烧身。由于这个原因，偏向第三方的验证包，比如[validator.js](https://github.com/chriso/validator.js)，而不是采用正则，或者使用[safe-regex](https://github.com/substack/safe-regex)来检测有问题的正则表达式。
+**TL;DR:** 正規表示式，在方便的同時，對JavaScript應用構成了真正的威脅，特別是Node.js平臺。匹配文字的使用者輸入需要大量的CPU週期來處理。在某種程度上，正則處理是效率低下的，比如驗證10個單詞的單個請求可能阻止整個event loop長達6秒，並讓CPU引火燒身。由於這個原因，偏向第三方的驗證包，比如[validator.js](https://github.com/chriso/validator.js)，而不是採用正則，或者使用[safe-regex](https://github.com/substack/safe-regex)來檢測有問題的正規表示式。
 
-**否则:** 写得不好的正则表达式可能容易受到正则表达式DoS攻击的影响, 这将完全阻止event loop。例如，流行的`moment`包在2017年的11月，被发现使用了错误的RegEx用法而易受攻击。
+**否則:** 寫得不好的正規表示式可能容易受到正規表示式DoS攻擊的影響, 這將完全阻止event loop。例如，流行的`moment`包在2017年的11月，被發現使用了錯誤的RegEx用法而易受攻擊。
 
-🔗 [**更多: 防止恶意正则**](./sections/security/regex.md)
+🔗 [**更多: 防止惡意正則**](./sections/security/regex.md)
 
 <br/><br/>
 
-## ![✔] 6.17. 使用变量避免模块加载
+## ![✔] 6.17. 使用變數避免模組載入
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** 避免通过作为参数的路径requiring/importing另一个文件, 原因是它可能源自用户输入。此规则可扩展为访问一般文件(即:`fs.readFile()`)或使用来自用户输入的动态变量访问其他敏感资源。[Eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) linter可以捕捉这样的模式, 并尽早提前警告。
+**TL;DR:** 避免通過作為參數的路徑requiring/importing另一個檔案, 原因是它可能源自使用者輸入。此規則可擴充套件為訪問一般檔案(即:`fs.readFile()`)或使用來自使用者輸入的動態變數訪問其他敏感資源。[Eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) linter可以捕捉這樣的模式, 並儘早提前警告。
 
-**否则:** 恶意用户输入可以找到用于获得篡改文件的参数, 例如, 文件系统上以前上载的文件, 或访问已有的系统文件。
+**否則:** 惡意使用者輸入可以找到用於獲得篡改檔案的參數, 例如, 檔案系統上以前上載的檔案, 或訪問已有的系統檔案。
 
-🔗 [**更多: 安全地加载模块**](./sections/security/safemoduleloading.chinese.md)
+🔗 [**更多: 安全地載入模組**](./sections/security/safemoduleloading.chinese.md)
 
 <br/><br/>
 
-## ![✔] 6.18. 在沙箱中运行不安全代码
+## ![✔] 6.18. 在沙箱中執行不安全程式碼
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** 当任务执行在运行时给出的外部代码时(例如, 插件), 使用任何类型的`沙盒`执行环境保护主代码，并隔离开主代码和插件。这可以通过一个专用的过程来实现 (例如:cluster.fork()), 无服务器环境或充当沙盒的专用npm包。
+**TL;DR:** 當任務執行在執行時給出的外部程式碼時(例如, 外掛), 使用任何類型的`沙盒`執行環境保護主程式碼，並隔離開主程式碼和外掛。這可以通過一個專用的過程來實現 (例如:cluster.fork()), 無伺服器環境或充當沙盒的專用npm包。
 
-**否则:** 插件可以通过无限循环、内存超载和对敏感进程环境变量的访问等多种选项进行攻击
+**否則:** 外掛可以通過無限迴圈、記憶體超載和對敏感程序環境變數的訪問等多種選項進行攻擊
 
-🔗 [**更多: 在沙箱中运行不安全代码**](./sections/security/sandbox.chinese.md)
+🔗 [**更多: 在沙箱中執行不安全程式碼**](./sections/security/sandbox.chinese.md)
 
 <br/><br/>
 
-## ![✔] 6.19. 使用子进程时要格外小心
+## ![✔] 6.19. 使用子程序時要格外小心
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** 尽可能地避免使用子进程，如果您仍然必须这样做，验证和清理输入以减轻shell注入攻击。更喜欢使用 "child_process"。execFile 的定义将只执行具有一组属性的单个命令, 并且不允许 shell 参数扩展。倾向于使用`child_process.execFile`，从定义上来说，它将仅仅执行具有一组属性的单个命令，并且不允许shell参数扩展。
+**TL;DR:** 儘可能地避免使用子程序，如果您仍然必須這樣做，驗證和清理輸入以減輕shell注入攻擊。更喜歡使用 "child_process"。execFile 的定義將只執行具有一組屬性的單個命令, 並且不允許 shell 參數擴充套件。傾向於使用`child_process.execFile`，從定義上來說，它將僅僅執行具有一組屬性的單個命令，並且不允許shell參數擴充套件。
 
-**否则:** 由于将恶意用户输入传递给未脱敏处理的系统命令, 直接地使用子进程可能导致远程命令执行或shell注入攻击。
+**否則:** 由於將惡意使用者輸入傳遞給未脫敏處理的系統命令, 直接地使用子程序可能導致遠端命令執行或shell注入攻擊。
 
-🔗 [**更多: 处理子进程时要格外小心**](./sections/security/childprocesses.chinese.md)
-
-<br/><br/>
-
-## ![✔] 6.20. 隐藏客户端的错误详细信息
-
-<a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
-
-**TL;DR:** 默认情况下, 集成的express错误处理程序隐藏错误详细信息。但是, 极有可能, 您实现自己的错误处理逻辑与自定义错误对象(被许多人认为是最佳做法)。如果这样做, 请确保不将整个Error对象返回到客户端, 这可能包含一些敏感的应用程序详细信息。
-
-**否则:** 敏感应用程序详细信息(如服务器文件路径、使用中的第三方模块和可能被攻击者利用的应用程序的其他内部工作流)可能会从stack trace发现的信息中泄露。
-
-🔗 [**更多: 隐藏客户端的错误详细信息**](./sections/security/hideerrors.md)
+🔗 [**更多: 處理子程序時要格外小心**](./sections/security/childprocesses.chinese.md)
 
 <br/><br/>
 
-## ![✔] 6.21. 对npm或Yarn，配置2FA
+## ![✔] 6.20. 隱藏客戶端的錯誤詳細資訊
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** 开发链中的任何步骤都应使用MFA(多重身份验证)进行保护, npm/Yarn对于那些能够掌握某些开发人员密码的攻击者来说是一个很好的机会。使用开发人员凭据, 攻击者可以向跨项目和服务广泛安装的库中注入恶意代码。甚至可能在网络上公开发布。在npm中启用2因素身份验证（2-factor-authentication）, 攻击者几乎没有机会改变您的软件包代码。
+**TL;DR:** 預設情況下, 整合的express錯誤處理程式隱藏錯誤詳細資訊。但是, 極有可能, 您實現自己的錯誤處理邏輯與自定義錯誤物件(被許多人認為是最佳做法)。如果這樣做, 請確保不將整個Error物件返回到客戶端, 這可能包含一些敏感的應用程式詳細資訊。
 
-**否则:** [Have you heard about the eslint developer who's password was hijacked?](https://medium.com/@oprearocks/eslint-backdoor-what-it-is-and-how-to-fix-the-issue-221f58f1a8c8)
+**否則:** 敏感應用程式詳細資訊(如伺服器檔案路徑、使用中的第三方模組和可能被攻擊者利用的應用程式的其他內部工作流)可能會從stack trace發現的資訊中洩露。
+
+🔗 [**更多: 隱藏客戶端的錯誤詳細資訊**](./sections/security/hideerrors.md)
 
 <br/><br/>
 
-## ![✔] 6.22. 修改session中间件设置
+## ![✔] 6.21. 對npm或Yarn，配置2FA
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** 每个web框架和技术都有其已知的弱点-告诉攻击者我们使用的web框架对他们来说是很大的帮助。使用session中间件的默认设置, 可以以类似于`X-Powered-By`header的方式向模块和框架特定的劫持攻击公开您的应用。尝试隐藏识别和揭露技术栈的任何内容(例如:Nonde.js, express)。
+**TL;DR:** 開發鏈中的任何步驟都應使用MFA(多重身份驗證)進行保護, npm/Yarn對於那些能夠掌握某些開發人員密碼的攻擊者來說是一個很好的機會。使用開發人員憑據, 攻擊者可以向跨項目和服務廣泛安裝的庫中注入惡意程式碼。甚至可能在網路上公開發布。在npm中啟用2因素身份驗證（2-factor-authentication）, 攻擊者幾乎沒有機會改變您的軟體包程式碼。
 
-**否则:** 可以通过不安全的连接发送cookie, 攻击者可能会使用会话标识来标识web应用程序的基础框架以及特定于模块的漏洞。
+**否則:** [Have you heard about the eslint developer who's password was hijacked?](https://medium.com/@oprearocks/eslint-backdoor-what-it-is-and-how-to-fix-the-issue-221f58f1a8c8)
+
+<br/><br/>
+
+## ![✔] 6.22. 修改session中介軟體設定
+
+<a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
+
+**TL;DR:** 每個web框架和技術都有其已知的弱點-告訴攻擊者我們使用的web框架對他們來說是很大的幫助。使用session中介軟體的預設設定, 可以以類似於`X-Powered-By`header的方式向模組和框架特定的劫持攻擊公開您的應用。嘗試隱藏識別和揭露技術棧的任何內容(例如:Nonde.js, express)。
+
+**否則:** 可以通過不安全的連線傳送cookie, 攻擊者可能會使用會話標識來標識web應用程式的基礎框架以及特定於模組的漏洞。
 
 🔗 [**更多: cookie和session安全**](./sections/security/sessions.md)
 
 <br/><br/>
 
-## ![✔] 6.23. 通过显式设置进程应崩溃的情况，以避免DOS攻击
+## ![✔] 6.23. 通過顯式設定程序應崩潰的情況，以避免DOS攻擊
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** 当错误未被处理时, Node进程将崩溃。即使错误被捕获并得到处理，许多最佳实践甚至建议退出。例如, Express会在任何异步错误上崩溃 - 除非使用catch子句包装路由。这将打开一个非常惬意的攻击点, 攻击者识别哪些输入会导致进程崩溃并重复发送相同的请求。没有即时补救办法, 但一些技术可以减轻苦楚: 每当进程因未处理的错误而崩溃，都会发出警报，验证输入并避免由于用户输入无效而导致进程崩溃，并使用catch将所有路由处理包装起来，并在请求中出现错误时, 考虑不要崩溃(与全局发生的情况相反)。
+**TL;DR:** 當錯誤未被處理時, Node程序將崩潰。即使錯誤被捕獲並得到處理，許多最佳實踐甚至建議退出。例如, Express會在任何非同步錯誤上崩潰 - 除非使用catch子句包裝路由。這將開啟一個非常愜意的攻擊點, 攻擊者識別哪些輸入會導致程序崩潰並重復傳送相同的請求。沒有即時補救辦法, 但一些技術可以減輕苦楚: 每當程序因未處理的錯誤而崩潰，都會發出警報，驗證輸入並避免由於使用者輸入無效而導致程序崩潰，並使用catch將所有路由處理包裝起來，並在請求中出現錯誤時, 考慮不要崩潰(與全局發生的情況相反)。
 
-**否则:** 这只是一个起到教育意义的假设: 给定许多Node.js应用程序, 如果我们尝试传递一个空的JSON正文到所有POST请求 - 少数应用程序将崩溃。在这一点上, 我们可以只是重复发送相同的请求, 就可以轻松地搞垮应用程序。
+**否則:** 這只是一個起到教育意義的假設: 給定許多Node.js應用程式, 如果我們嘗試傳遞一個空的JSON正文到所有POST請求 - 少數應用程式將崩潰。在這一點上, 我們可以只是重複傳送相同的請求, 就可以輕鬆地搞垮應用程式。
 
 <br/><br/><br/>
 
@@ -941,52 +941,52 @@ null == undefined   // true
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a>
 
-**TL;DR:** 不验证用户输入的重定向可使攻击者启动网络钓鱼诈骗，窃取用户凭据，以及执行其他恶意操作。
+**TL;DR:** 不驗證使用者輸入的重定向可使攻擊者啟動網路釣魚詐騙，竊取使用者憑據，以及執行其他惡意操作。
 
-**否则:** 当攻击者发现你没有校验用户提供的外部输入时，他们会在论坛、社交媒体以和其他公共场合发布他们精心制作的链接来诱使用户点击，以此达到漏洞利用的目的。
+**否則:** 當攻擊者發現你沒有校驗使用者提供的外部輸入時，他們會在論壇、社交媒體以和其他公共場合釋出他們精心製作的連結來誘使使用者點選，以此達到漏洞利用的目的。
 
-🔗 [**阅读更多: 避免不安全的重定向**](./sections/security/saferedirects.chinese.md)
+🔗 [**閱讀更多: 避免不安全的重定向**](./sections/security/saferedirects.chinese.md)
 
 <br/><br/><br/>
 
-## ![✔] 6.25. 避免将机密信息发布到NPM仓库
+## ![✔] 6.25. 避免將機密資訊釋出到NPM倉庫
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** 您应该采取预防措施来避免偶然地将机密信息发布到npm仓库的风险。 一个 `.npmignore` 文件可以被用作忽略掉特定的文件或目录, 或者一个在 `package.json` 中的 `files` 数组可以起到一个白名单的作用.
+**TL;DR:** 您應該採取預防措施來避免偶然地將機密資訊釋出到npm倉庫的風險。 一個 `.npmignore` 檔案可以被用作忽略掉特定的檔案或目錄, 或者一個在 `package.json` 中的 `files` 陣列可以起到一個白名單的作用.
 
-**否则:** 您项目的API密钥、密码或者其它机密信息很容易被任何碰到的人滥用，这可能会导致经济损失、身份冒充以及其它风险。
+**否則:** 您項目的API金鑰、密碼或者其它機密資訊很容易被任何碰到的人濫用，這可能會導致經濟損失、身份冒充以及其它風險。
 
-🔗 [**阅读更多: 避免发布机密信息**](./sections/security/avoid_publishing_secrets.md)
+🔗 [**閱讀更多: 避免釋出機密資訊**](./sections/security/avoid_publishing_secrets.md)
 
 <br/><br/><br/>
 
 <p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
 
-# `7. 草稿: 有关性能的最佳实践`
+# `7. 草稿: 有關效能的最佳實踐`
 
-## 我们的贡献者们正在努力完善这个章节。 [你想要加入吗?](https://github.com/goldbergyoni/nodebestpractices/issues/256)
+## 我們的貢獻者們正在努力完善這個章節。 [你想要加入嗎?](https://github.com/goldbergyoni/nodebestpractices/issues/256)
 
 <br/><br/>
 
-## ![✔] 7.1. 不要阻塞事件循环
+## ![✔] 7.1. 不要阻塞事件迴圈
 
-**TL;DR:** 避免执行CPU密集型的任务，并将这些任务转移到基于上下文的专用线程中，因为它们会阻塞大多数单线程事件循环。
+**TL;DR:** 避免執行CPU密集型的任務，並將這些任務轉移到基於上下文的專用執行緒中，因為它們會阻塞大多數單執行緒事件迴圈。
 
-**否则:** 由于事件循环被阻塞了，Node.js 将无法处理其它请求，从而导致同时请求的用户的延迟。 **3000 位用户正在等待响应，内容本身已经准备好了提供服务， 但是一个单独的请求阻止了服务器将结果分发回去。**
+**否則:** 由於事件迴圈被阻塞了，Node.js 將無法處理其它請求，從而導致同時請求的使用者的延遲。 **3000 位使用者正在等待響應，內容本身已經準備好了提供服務， 但是一個單獨的請求阻止了伺服器將結果分發回去。**
 
-🔗 [**阅读更多: 不要阻塞事件循环**](./sections/performance/block-loop.md)
+🔗 [**閱讀更多: 不要阻塞事件迴圈**](./sections/performance/block-loop.md)
 
 <br /><br /><br />
 
-## ![✔] 7.2. 优先使用原生的JS方法，而不是像 Lodash 这样的用户空间级别的实用工具
+## ![✔] 7.2. 優先使用原生的JS方法，而不是像 Lodash 這樣的使用者空間級別的實用工具
 
-**TL;DR:** 使用像 `lodash` 和 `underscore` 这样的实用库替代原生的JS方法，通常来说这么做更不好，因为它导致了一些不必要的依赖项以及更差的性能表现。
-请记住，随着新的V8引擎以及新的ES标准的引入，原生方法得到了改进，它们现在会比这些实用工具库高出大概 50% 的性能。
+**TL;DR:** 使用像 `lodash` 和 `underscore` 這樣的實用庫替代原生的JS方法，通常來說這麼做更不好，因為它導致了一些不必要的依賴項以及更差的效能表現。
+請記住，隨著新的V8引擎以及新的ES標準的引入，原生方法得到了改進，它們現在會比這些實用工具庫高出大概 50% 的效能。
 
-**否则:** 你将不得不维护一些性能更低的项目，在这些项目中，你本可以很简单的使用那些已经可以用的东西，或者用几行代码来取代掉几个文件。
+**否則:** 你將不得不維護一些效能更低的項目，在這些項目中，你本可以很簡單的使用那些已經可以用的東西，或者用幾行程式碼來取代掉幾個檔案。
 
-🔗 [**阅读更多: 原生方法胜过实用工具**](./sections/performance/nativeoverutil.md)
+🔗 [**閱讀更多: 原生方法勝過實用工具**](./sections/performance/nativeoverutil.md)
 
 <br/><br/><br/>
 

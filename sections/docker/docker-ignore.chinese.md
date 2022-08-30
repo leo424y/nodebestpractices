@@ -1,14 +1,14 @@
-# 使用.dockerignore防止泄漏机密
+# 使用.dockerignore防止洩漏機密
 
 <br/><br/>
 
-### 一段解释
+### 一段解釋
 
-Docker的build命令会通过一个虚拟网络（virtual network）拷贝本地文件到构建的上下文环境。注意 - 开发和CI文件夹会包含机密文件，比如.npmrc，.aws，.env，以及其他一些敏感文件。最终，Docker镜像可能会包含机密信息，并在不安全的区域暴露它们（例如，Docker repository，partners servers）。一个更好的方式是，Dockerfile应该明确地描述哪些文件需要被复制。除此之外，包含一个.dockerginore文件，还充当最后一个安全网，过滤掉不必要的文件夹和潜在的机密文件。这样做还可以加快构建速度 - 通过排除在生产环境并不会用到的通用开发文件夹（例如.git，测试结果，IDE配置），整个构建过程可以更好的使用缓存，并取得一个更佳的性能。
+Docker的build命令會通過一個虛擬網路（virtual network）拷貝本地檔案到構建的上下文環境。注意 - 開發和CI資料夾會包含機密檔案，比如.npmrc，.aws，.env，以及其他一些敏感檔案。最終，Docker映象可能會包含機密資訊，並在不安全的區域暴露它們（例如，Docker repository，partners servers）。一個更好的方式是，Dockerfile應該明確地描述哪些檔案需要被複制。除此之外，包含一個.dockerginore檔案，還充當最後一個安全網，過濾掉不必要的資料夾和潛在的機密檔案。這樣做還可以加快構建速度 - 通過排除在生產環境並不會用到的通用開發資料夾（例如.git，測試結果，IDE配置），整個構建過程可以更好的使用快取，並取得一個更佳的效能。
 
 <br/><br/>
 
-### 代码示例 – 对于Node.js，一个好的默认.dockerignore示例
+### 程式碼示例 – 對於Node.js，一個好的預設.dockerignore示例
 
 <details>
 <summary><strong>.dockerignore</strong></summary>
@@ -31,7 +31,7 @@ Docker的build命令会通过一个虚拟网络（virtual network）拷贝本地
 
 <br/><br/>
 
-### 代码示例 反模式 - 遍历拷贝所有文件
+### 程式碼示例 反模式 - 遍歷拷貝所有檔案
 
 <details>
 <summary><strong>Dockerfile</strong></summary>
@@ -40,10 +40,10 @@ Docker的build命令会通过一个虚拟网络（virtual network）拷贝本地
 FROM node:12-slim AS build
 
 WORKDIR /usr/src/app
-# 下一行拷贝所有文件
+# 下一行拷貝所有檔案
 COPY . .
 
-# 剩余部分
+# 剩餘部分
 
 ```
 

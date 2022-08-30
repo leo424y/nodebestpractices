@@ -1,14 +1,14 @@
-# 清理编译过程中的秘钥，避免使用秘钥作为参数
+# 清理編譯過程中的祕鑰，避免使用祕鑰作為參數
 
 <br/><br/>
 
-### 一段解释
+### 一段解釋
 
-Docker映像不仅仅是一堆文件，而是展示构建期间所发生的层级关系。在普通场景中，开发人员在构建过程中需要知道npm令牌（主要是对于私有registry）- 会通过把令牌作为构建参数来传递，但这种实现是错误的。这可能看起来是没什么问题，并且安全，但此令牌可以从开发人员机器中的Docker历史记录、Docker registry和CI中获得。获取到该令牌的攻击者就能够拥有写入此组织私有npm registry的权限。还有两个更安全的替代方法：完美无瑕的一个替代方案是使用Docker --secret功能（截至2020年7月还在实验阶段），它只允许在构建期间挂载（mount）文件。第二种方法是使用带args的多阶段（multi-stage）构建，然后只将必要的文件复制到生产环境。后一种技术将不会同时一起提供秘钥与镜像，但秘钥将出现在本地Docker的历史记录中 - 对大多数组织来说，这通常被认为足够安全。
+Docker映像不僅僅是一堆檔案，而是展示構建期間所發生的層級關係。在普通場景中，開發人員在構建過程中需要知道npm令牌（主要是對於私有registry）- 會通過把令牌作為構建參數來傳遞，但這種實現是錯誤的。這可能看起來是沒什麼問題，並且安全，但此令牌可以從開發人員機器中的Docker歷史記錄、Docker registry和CI中獲得。獲取到該令牌的攻擊者就能夠擁有寫入此組織私有npm registry的許可權。還有兩個更安全的替代方法：完美無瑕的一個替代方案是使用Docker --secret功能（截至2020年7月還在實驗階段），它只允許在構建期間掛載（mount）檔案。第二種方法是使用帶args的多階段（multi-stage）構建，然後只將必要的檔案複製到生產環境。後一種技術將不會同時一起提供祕鑰與映象，但祕鑰將出現在本地Docker的歷史記錄中 - 對大多陣列織來說，這通常被認為足夠安全。
 
 <br/><br/>
 
-### 代码示例 – 使用Docker挂载秘钥（实验功能但稳定）
+### 程式碼示例 – 使用Docker掛載祕鑰（實驗功能但穩定）
 
 <details>
 
@@ -23,14 +23,14 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN --mount=type=secret,id=npm,target=/root/.npmrc npm ci
 
-# 剩余部分
+# 剩餘部分
 ```
 
 </details>
 
 <br/><br/>
 
-### 代码示例 – 使用多阶段（multi-stage build）安全构建
+### 程式碼示例 – 使用多階段（multi-stage build）安全構建
 
 <details>
 
@@ -53,14 +53,14 @@ FROM build as prod
 COPY --from=build /dist /dist
 CMD ["node", "index.js"]
 
-# ARG和.npmrc在最终的镜像中不会出现，但会在Docker daemon的未打标签（un-tagged）镜像列表中找到它们 - 确保删除他们 
+# ARG和.npmrc在最終的映象中不會出現，但會在Docker daemon的未打標籤（un-tagged）映象列表中找到它們 - 確保刪除他們 
 ```
 
 </details>
 
 <br/><br/>
 
-### 代码示例 反模式 - 使用构建参数
+### 程式碼示例 反模式 - 使用構建參數
 
 <details>
 
@@ -77,7 +77,7 @@ RUN echo "//registry.npmjs.org/:\_authToken=\$NPM_TOKEN" > .npmrc && \
  npm ci --production && \
  rm -f .npmrc
 
-# 在拷贝命令的同时删除.npmrc文件不会在layer里面保存它, 但在镜像历史里面还是会找到它
+# 在拷貝命令的同時刪除.npmrc檔案不會在layer裡面儲存它, 但在映象歷史裡面還是會找到它
 
 CMD ["node", "index.js"]
 ```
@@ -86,11 +86,11 @@ CMD ["node", "index.js"]
 
 <br/><br/>
 
-### 博客引用: "秘钥不会保存在最终的Docker中"
+### 部落格引用: "祕鑰不會儲存在最終的Docker中"
 
-摘自博客, [Alexandra Ulsh](https://www.alexandraulsh.com/2019/02/24/docker-build-secrets-and-npmrc/?fbclid=IwAR0EAr1nr4_QiGzlNQcQKkd9rem19an9atJRO_8-n7oOZXwprToFQ53Y0KQ)
+摘自部落格, [Alexandra Ulsh](https://www.alexandraulsh.com/2019/02/24/docker-build-secrets-and-npmrc/?fbclid=IwAR0EAr1nr4_QiGzlNQcQKkd9rem19an9atJRO_8-n7oOZXwprToFQ53Y0KQ)
 
-> 在2018年11月，Docker18.09在docker构建过程中引入一个新的标志（flag）--secret。它允许用户通过一个文件传递秘钥到Docker包中（build）。这些秘钥不会保存在最终的Docker镜像，中间镜像和镜像提交历史里面。借助构建参数secret，您现在可以使用私有npm包安全地构建Docker映像，而无需构建参数和多阶段（multi-stage）构建。
+> 在2018年11月，Docker18.09在docker構建過程中引入一個新的標誌（flag）--secret。它允許使用者通過一個檔案傳遞祕鑰到Docker包中（build）。這些祕鑰不會儲存在最終的Docker映象，中間映象和映象提交歷史裡面。藉助構建參數secret，您現在可以使用私有npm包安全地構建Docker映像，而無需構建參數和多階段（multi-stage）構建。
 
 ```
 

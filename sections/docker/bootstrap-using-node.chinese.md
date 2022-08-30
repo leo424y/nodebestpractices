@@ -1,10 +1,10 @@
-# 使用node命令而不是npm启动容器
+# 使用node命令而不是npm啟動容器
 
-## 一段解释
+## 一段解釋
 
-我们经常看到开发者使用`CMD 'npm start'`启动app的代码示例。这是一个不好的做法。因为`npm`不会向您的app转发信号（signals），这将阻止应用优雅关闭（graceful shutdown），（见[/sections/docker/graceful-shutdown.md]）。如果您使用了子进程（child-processes），在意外关闭时则无法正确清理它们，将僵尸进程留在主机上。同时，`npm start`也导致无意义的增加一个额外进程。使用`CMD ['node','server.js']`启动您的应用吧。假如您的应用使用了子进程（child-processes），也可以使用`TINI`作为入口（entrypoint）。
+我們經常看到開發者使用`CMD 'npm start'`啟動app的程式碼示例。這是一個不好的做法。因為`npm`不會向您的app轉發訊號（signals），這將阻止應用優雅關閉（graceful shutdown），（見[/sections/docker/graceful-shutdown.md]）。如果您使用了子程序（child-processes），在意外關閉時則無法正確清理它們，將殭屍程序留在主機上。同時，`npm start`也導致無意義的增加一個額外程序。使用`CMD ['node','server.js']`啟動您的應用吧。假如您的應用使用了子程序（child-processes），也可以使用`TINI`作為入口（entrypoint）。
 
-### 代码示例 - 启动Node
+### 程式碼示例 - 啟動Node
 
 ```dockerfile
 FROM node:12-slim AS build
@@ -17,12 +17,12 @@ CMD ["node", "server.js"]
 ```
 
 
-### 代码示例 - 使用Tiny作为入口（ENTRYPOINT）
+### 程式碼示例 - 使用Tiny作為入口（ENTRYPOINT）
 
 ```dockerfile
 FROM node:12-slim AS build
 
-# 使用子进程（child-processes）的情况下，添加Tini
+# 使用子程序（child-processes）的情況下，新增Tini
 ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
@@ -46,11 +46,11 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci --production && npm clean cache --force
 
-# 不要这么做!
+# 不要這麼做!
 CMD "npm start"
 ```
 
-在同一字符串命令里面使用node，将启动一个bash/ash脚本进程去执行您的命令。它和使用`npm`的效果类似。
+在同一字元串命令裡面使用node，將啟動一個bash/ash指令碼程序去執行您的命令。它和使用`npm`的效果類似。
 
 ```dockerfile
 FROM node:12-slim AS build
@@ -59,11 +59,11 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci --production && npm clean cache --force
 
-# 不要这么做，它将启动bash
+# 不要這麼做，它將啟動bash
 CMD "node server.js"
 ```
 
-使用npm启动，这里是进程树：
+使用npm啟動，這裡是程序樹：
 ```console
 $ ps falx
   UID   PID  PPID   COMMAND
@@ -71,9 +71,9 @@ $ ps falx
     0    16     1   sh -c node server.js
     0    17    16    \_ node server.js
 ```
-额外的两个进程没有任何好处。
+額外的兩個程序沒有任何好處。
 
-来源:
+來源:
 
 
 https://maximorlov.com/process-signals-inside-docker-containers/
